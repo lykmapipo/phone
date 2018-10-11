@@ -1,7 +1,7 @@
 # phone
 
-[![Build phone](https://travis-ci.org/lykmapipo/phone.svg?branch=master)](https://travis-ci.org/lykmapipo/phone)
-[![Dependencies phone](https://david-dm.org/lykmapipo/phone.svg?style=flat-square)](https://david-dm.org/lykmapipo/phone)
+[![Build Status](https://travis-ci.org/lykmapipo/phone.svg?branch=master)](https://travis-ci.org/lykmapipo/phone)
+[![Dependencies Status](https://david-dm.org/lykmapipo/phone/status.svg?style=flat-square)](https://david-dm.org/lykmapipo/phone)
 
 Helper utilities for phone numbers
 
