@@ -1,7 +1,7 @@
 {
   "name": "@lykmapipo/phone",
-  "version": "0.1.0",
-  "description": "Helper utilities for phone numbers",
+  "version": "0.2.0",
+  "description": "Helper utilities for parsing and validate phone numbers",
   "main": "index.js",
   "scripts": {
     "test": "grunt test"
@@ -20,7 +20,9 @@
     "national",
     "international",
     "rfc3966",
-    "libphonenumber"
+    "libphonenumber",
+    "parse",
+    "validate"
   ],
   "contributors": [
     {

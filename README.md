@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/lykmapipo/phone.svg?branch=master)](https://travis-ci.org/lykmapipo/phone)
 [![Dependencies Status](https://david-dm.org/lykmapipo/phone/status.svg?style=flat-square)](https://david-dm.org/lykmapipo/phone)
 
-Helper utilities for phone numbers
+Helper utilities for parsing and validate phone numbers
 
 ## Requirements
 
@@ -13,14 +13,14 @@ Helper utilities for phone numbers
 ## Installation
 
 ```sh
-npm install --save lodash @lykmapipo/phone
+npm install --save @lykmapipo/phone
 ```
 
 ## Usage
 
 ```js
 const { parsePhoneNumber } = require('@lykmapipo/phone');
-const phoneNumber = parsePhoneNumber('+255715333777', 'TZ');
+const phoneNumber = parsePhoneNumber('+255715333777', 'US');
 
 //result
 { raw: '+255715333777',
@@ -30,6 +30,7 @@ const phoneNumber = parsePhoneNumber('+255715333777', 'TZ');
   isValid: true,
   isPossible: true,
   isValidNumberForCountryCode: true,
+  isValidFor: { TZ: true, US: false },
   isFixedLine: false,
   isMobile: true,
   type: 'MOBILE',
@@ -46,7 +47,7 @@ const phoneNumber = parsePhoneNumber('+255715333777', 'TZ');
   e164: '+255715333777',
   international: '+255 715 333 777',
   national: '0715 333 777',
-  rfc3966: 'tel:+255-715-333-777' }
+  rfc3966: 'tel:+255-715-333-777'}
 ```
 
 ## Test

@@ -52,6 +52,7 @@ describe('phone', () => {
     expect(_phoneNumber.isValid).to.exist;
     expect(_phoneNumber.isPossible).to.exist;
     expect(_phoneNumber.isValidForCountryCode).to.exist;
+    expect(_phoneNumber.isValidFor).to.exist;
     expect(_phoneNumber.isFixedLine).to.exist;
     expect(_phoneNumber.isMobile).to.exist;
     expect(_phoneNumber.type).to.exist;
@@ -82,6 +83,7 @@ describe('phone', () => {
     expect(_phoneNumber.isValid).to.exist;
     expect(_phoneNumber.isPossible).to.exist;
     expect(_phoneNumber.isValidForCountryCode).to.exist;
+    expect(_phoneNumber.isValidFor).to.exist;
     expect(_phoneNumber.isFixedLine).to.exist;
     expect(_phoneNumber.isMobile).to.exist;
     expect(_phoneNumber.type).to.exist;
@@ -113,6 +115,7 @@ describe('phone', () => {
     expect(_phoneNumber.isValid).to.exist;
     expect(_phoneNumber.isPossible).to.exist;
     expect(_phoneNumber.isValidForCountryCode).to.exist;
+    expect(_phoneNumber.isValidFor).to.exist;
     expect(_phoneNumber.isFixedLine).to.exist;
     expect(_phoneNumber.isMobile).to.exist;
     expect(_phoneNumber.type).to.exist;
@@ -143,6 +146,38 @@ describe('phone', () => {
     expect(_phoneNumber.isValid).to.exist;
     expect(_phoneNumber.isPossible).to.exist;
     expect(_phoneNumber.isValidForCountryCode).to.exist;
+    expect(_phoneNumber.isValidFor).to.exist;
+    expect(_phoneNumber.isFixedLine).to.exist;
+    expect(_phoneNumber.isMobile).to.exist;
+    expect(_phoneNumber.type).to.exist;
+    expect(_phoneNumber.isFixedLineOrMobile).to.exist;
+    expect(_phoneNumber.isTollFree).to.exist;
+    expect(_phoneNumber.isPremiumRate).to.exist;
+    expect(_phoneNumber.isSharedCost).to.exist;
+    expect(_phoneNumber.isVoip).to.exist;
+    expect(_phoneNumber.isPersonalNumber).to.exist;
+    expect(_phoneNumber.isPager).to.exist;
+    expect(_phoneNumber.isUan).to.exist;
+    expect(_phoneNumber.isVoicemail).to.exist;
+    expect(_phoneNumber.isUnknown).to.exist;
+    expect(_phoneNumber.e164).to.exist;
+    expect(_phoneNumber.international).to.exist;
+    expect(_phoneNumber.national).to.exist;
+    expect(_phoneNumber.rfc3966).to.exist;
+  });
+
+  it('should parse phone number', () => {
+    const phoneNumber = '0715333777';
+    const _phoneNumber = parsePhoneNumber(phoneNumber, 'US', 'TZ', 'UK');
+    expect(_phoneNumber).to.exist;
+    expect(_phoneNumber.raw).to.exist;
+    expect(_phoneNumber.countryCode).to.exist;
+    expect(_phoneNumber.callingCode).to.exist;
+    expect(_phoneNumber.extension).to.exist;
+    expect(_phoneNumber.isValid).to.exist;
+    expect(_phoneNumber.isPossible).to.exist;
+    expect(_phoneNumber.isValidForCountryCode).to.exist;
+    expect(_phoneNumber.isValidFor).to.exist;
     expect(_phoneNumber.isFixedLine).to.exist;
     expect(_phoneNumber.isMobile).to.exist;
     expect(_phoneNumber.type).to.exist;

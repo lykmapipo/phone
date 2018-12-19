@@ -3,7 +3,7 @@
 
 /* dependencies */
 const _ = require('lodash');
-const { getString } = require('@lykmapipo/env');
+const { getString, getStrings } = require('@lykmapipo/env');
 const { sync: getLocale } = require('os-locale');
 const { PhoneNumberFormat } = require('google-libphonenumber');
 const { PhoneNumberType } = require('google-libphonenumber');
@@ -152,7 +152,7 @@ function format(phoneNumber) {
  * @function _parsePhoneNumber
  * @description parse provided phone number to obtain its information
  * @param {String} phoneNumber a valid phone number
- * @param {String} countryCode a valid country code for validation. If not
+ * @param {...String} countryCode a valid country code(s) for validation. If not
  * provided process.env.DEFAULT_COUNTRY_CODE or os country code will be used as
  * as default
  * @return {Object|undefined} phone number type validity
@@ -194,15 +194,20 @@ function format(phoneNumber) {
  * }
  *
  */
-function _parsePhoneNumber(phoneNumber, countryCode) {
+function _parsePhoneNumber(phoneNumber, ...countryCode) {
 
   try {
     // ensure raw phone number
     const raw = _.clone(phoneNumber);
 
+    // collect country codes
+    let countryCodes = [getString('DEFAULT_COUNTRY_CODE', OS_COUNTRY_CODE)];
+    countryCodes = getStrings('DEFAULT_COUNTRY_CODES', countryCodes);
+    countryCodes = _.compact(_.concat([], countryCodes, countryCode));
+    countryCodes = _.uniq(_.map(countryCodes, _.toUpper));
+
     // ensure country(or region) code
-    let _countryCode = getString('DEFAULT_COUNTRY_CODE', OS_COUNTRY_CODE);
-    _countryCode = _.clone(countryCode || _countryCode);
+    const _countryCode = _.clone(_.first(countryCodes));
 
     // parse phone number
     const parsed = phoneNumberUtil.parseAndKeepRawInput(raw, _countryCode);
@@ -235,11 +240,21 @@ function _parsePhoneNumber(phoneNumber, countryCode) {
     phone.isValidForCountryCode =
       phoneNumberUtil.isValidNumberForRegion(parsed, phone.countryCode);
 
+    // set if is valid per given country codes
+    phone.isValidFor = {};
+    _.forEach(countryCodes, function isValidFor(code) {
+      phone.isValidFor[code] =
+        phoneNumberUtil.isValidNumberForRegion(parsed, code);
+    });
+
     // set phone number type flags
     phone = _.merge({}, phone, checkValidity(parsed));
 
     // format phone number in accepted formats
     phone = _.merge({}, phone, format(parsed));
+
+    // add e164 format with no plus
+    phone.e164NoPlus = phone.e164.replace(/\+/g, '');
 
     // return parsed phone number
     return phone;
@@ -344,8 +359,4 @@ _.forEach([].concat(FORMATS), function exportFormat(format) {
  * }
  *
  */
-exports = exports.parsePhoneNumber =
-  function parsePhoneNumber(phoneNumber, countryCode) {
-    const phoneInfo = _parsePhoneNumber(phoneNumber, countryCode);
-    return phoneInfo;
-  };
+exports = exports.parsePhoneNumber = _parsePhoneNumber;
