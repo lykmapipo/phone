@@ -155,7 +155,7 @@ function format(phoneNumber) {
  * @param {String} countryCode a valid country code for validation. If not
  * provided process.env.DEFAULT_COUNTRY_CODE or os country code will be used as
  * as default
- * @return {Object} phone number type validity
+ * @return {Object|undefined} phone number type validity
  * @author lally elias <lallyelias87@gmail.com>
  * @license MIT
  * @since 0.1.0
@@ -196,52 +196,59 @@ function format(phoneNumber) {
  */
 function _parsePhoneNumber(phoneNumber, countryCode) {
 
-  // ensure raw phone number
-  const raw = _.clone(phoneNumber);
+  try {
+    // ensure raw phone number
+    const raw = _.clone(phoneNumber);
 
-  // ensure country(or region) code
-  let _countryCode = getString('DEFAULT_COUNTRY_CODE', OS_COUNTRY_CODE);
-  _countryCode = _.clone(countryCode || _countryCode);
+    // ensure country(or region) code
+    let _countryCode = getString('DEFAULT_COUNTRY_CODE', OS_COUNTRY_CODE);
+    _countryCode = _.clone(countryCode || _countryCode);
 
-  // parse phone number
-  const parsed = phoneNumberUtil.parseAndKeepRawInput(raw, _countryCode);
+    // parse phone number
+    const parsed = phoneNumberUtil.parseAndKeepRawInput(raw, _countryCode);
 
-  // prepare parse phone number result
-  let phone = {};
+    // prepare parse phone number result
+    let phone = {};
 
-  // set raw phone number
-  phone.raw = raw;
+    // set raw phone number
+    phone.raw = raw;
 
-  // set phone country code
-  phone.countryCode =
-    (phoneNumberUtil.getRegionCodeForNumber(parsed) || _countryCode);
+    // set phone country code
+    phone.countryCode =
+      (phoneNumberUtil.getRegionCodeForNumber(parsed) || _countryCode);
 
-  // set phone country calling code
-  phone.callingCode =
-    (parsed.getCountryCode() || parsed.getCountryCodeOrDefault());
+    // set phone country calling code
+    phone.callingCode =
+      (parsed.getCountryCode() || parsed.getCountryCodeOrDefault());
 
-  // set phone number extension
-  phone.extension =
-    (parsed.getExtension() || parsed.getExtensionOrDefault());
+    // set phone number extension
+    phone.extension =
+      (parsed.getExtension() || parsed.getExtensionOrDefault());
 
-  // set phone number valid flag
-  phone.isValid = phoneNumberUtil.isValidNumber(parsed);
+    // set phone number valid flag
+    phone.isValid = phoneNumberUtil.isValidNumber(parsed);
 
-  // set possible flag
-  phone.isPossible = phoneNumberUtil.isPossibleNumber(parsed);
+    // set possible flag
+    phone.isPossible = phoneNumberUtil.isPossibleNumber(parsed);
 
-  // set is valid for country(or region) code
-  phone.isValidForCountryCode =
-    phoneNumberUtil.isValidNumberForRegion(parsed, phone.countryCode);
+    // set is valid for country(or region) code
+    phone.isValidForCountryCode =
+      phoneNumberUtil.isValidNumberForRegion(parsed, phone.countryCode);
 
-  // set phone number type flags
-  phone = _.merge({}, phone, checkValidity(parsed));
+    // set phone number type flags
+    phone = _.merge({}, phone, checkValidity(parsed));
 
-  // format phone number in accepted formats
-  phone = _.merge({}, phone, format(parsed));
+    // format phone number in accepted formats
+    phone = _.merge({}, phone, format(parsed));
 
-  // return parsed phone number
-  return phone;
+    // return parsed phone number
+    return phone;
+  }
+
+  // fail to parse phone number
+  catch (error) {
+    return undefined;
+  }
 
 }
 
