@@ -45,6 +45,7 @@ const phoneNumber = parsePhoneNumber('+255715333777', 'US');
   isVoicemail: false,
   isUnknown: false,
   e164: '+255715333777',
+  e164NoPlus: '255715333777',
   international: '+255 715 333 777',
   national: '0715 333 777',
   rfc3966: 'tel:+255-715-333-777'}
