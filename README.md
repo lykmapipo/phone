@@ -20,7 +20,7 @@ npm install --save @lykmapipo/phone
 
 ```js
 const { parsePhoneNumber } = require('@lykmapipo/phone');
-const phoneNumber = parsePhoneNumber('+255715333777', 'US');
+const phoneNumber = parsePhoneNumber('+255715333777', 'TZ');
 
 //result
 { raw: '+255715333777',
@@ -30,7 +30,6 @@ const phoneNumber = parsePhoneNumber('+255715333777', 'US');
   isValid: true,
   isPossible: true,
   isValidNumberForCountryCode: true,
-  isValidFor: { TZ: true, US: false },
   isFixedLine: false,
   isMobile: true,
   type: 'MOBILE',

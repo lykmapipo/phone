@@ -52,7 +52,6 @@ describe('phone', () => {
     expect(_phoneNumber.isValid).to.exist;
     expect(_phoneNumber.isPossible).to.exist;
     expect(_phoneNumber.isValidForCountryCode).to.exist;
-    expect(_phoneNumber.isValidFor).to.exist;
     expect(_phoneNumber.isFixedLine).to.exist;
     expect(_phoneNumber.isMobile).to.exist;
     expect(_phoneNumber.type).to.exist;
@@ -83,7 +82,6 @@ describe('phone', () => {
     expect(_phoneNumber.isValid).to.exist;
     expect(_phoneNumber.isPossible).to.exist;
     expect(_phoneNumber.isValidForCountryCode).to.exist;
-    expect(_phoneNumber.isValidFor).to.exist;
     expect(_phoneNumber.isFixedLine).to.exist;
     expect(_phoneNumber.isMobile).to.exist;
     expect(_phoneNumber.type).to.exist;
@@ -115,7 +113,6 @@ describe('phone', () => {
     expect(_phoneNumber.isValid).to.exist;
     expect(_phoneNumber.isPossible).to.exist;
     expect(_phoneNumber.isValidForCountryCode).to.exist;
-    expect(_phoneNumber.isValidFor).to.exist;
     expect(_phoneNumber.isFixedLine).to.exist;
     expect(_phoneNumber.isMobile).to.exist;
     expect(_phoneNumber.type).to.exist;
@@ -146,7 +143,6 @@ describe('phone', () => {
     expect(_phoneNumber.isValid).to.exist;
     expect(_phoneNumber.isPossible).to.exist;
     expect(_phoneNumber.isValidForCountryCode).to.exist;
-    expect(_phoneNumber.isValidFor).to.exist;
     expect(_phoneNumber.isFixedLine).to.exist;
     expect(_phoneNumber.isMobile).to.exist;
     expect(_phoneNumber.type).to.exist;
@@ -168,7 +164,7 @@ describe('phone', () => {
 
   it('should parse phone number', () => {
     const phoneNumber = '0715333777';
-    const _phoneNumber = parsePhoneNumber(phoneNumber, 'US', 'TZ', 'UK');
+    const _phoneNumber = parsePhoneNumber(phoneNumber, 'US', 'TZ');
     expect(_phoneNumber).to.exist;
     expect(_phoneNumber.raw).to.exist;
     expect(_phoneNumber.countryCode).to.exist;
@@ -177,7 +173,6 @@ describe('phone', () => {
     expect(_phoneNumber.isValid).to.exist;
     expect(_phoneNumber.isPossible).to.exist;
     expect(_phoneNumber.isValidForCountryCode).to.exist;
-    expect(_phoneNumber.isValidFor).to.exist;
     expect(_phoneNumber.isFixedLine).to.exist;
     expect(_phoneNumber.isMobile).to.exist;
     expect(_phoneNumber.type).to.exist;

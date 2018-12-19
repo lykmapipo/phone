@@ -206,57 +206,56 @@ function _parsePhoneNumber(phoneNumber, ...countryCode) {
     countryCodes = _.compact(_.concat([], countryCodes, countryCode));
     countryCodes = _.uniq(_.map(countryCodes, _.toUpper));
 
-    // ensure country(or region) code
-    const _countryCode = _.clone(_.first(countryCodes));
+    // test parsing for provided country codes
+    const phones = _.map(countryCodes, function _parse(_countryCode) {
 
-    // parse phone number
-    const parsed = phoneNumberUtil.parseAndKeepRawInput(raw, _countryCode);
+      // parse phone number
+      const parsed = phoneNumberUtil.parseAndKeepRawInput(raw, _countryCode);
 
-    // prepare parse phone number result
-    let phone = {};
+      // prepare parse phone number result
+      let phone = {};
 
-    // set raw phone number
-    phone.raw = raw;
+      // set raw phone number
+      phone.raw = raw;
 
-    // set phone country code
-    phone.countryCode =
-      (phoneNumberUtil.getRegionCodeForNumber(parsed) || _countryCode);
+      // set phone country code
+      phone.countryCode =
+        (phoneNumberUtil.getRegionCodeForNumber(parsed) || _countryCode);
 
-    // set phone country calling code
-    phone.callingCode =
-      (parsed.getCountryCode() || parsed.getCountryCodeOrDefault());
+      // set phone country calling code
+      phone.callingCode =
+        (parsed.getCountryCode() || parsed.getCountryCodeOrDefault());
 
-    // set phone number extension
-    phone.extension =
-      (parsed.getExtension() || parsed.getExtensionOrDefault());
+      // set phone number extension
+      phone.extension =
+        (parsed.getExtension() || parsed.getExtensionOrDefault());
 
-    // set phone number valid flag
-    phone.isValid = phoneNumberUtil.isValidNumber(parsed);
+      // set phone number valid flag
+      phone.isValid = phoneNumberUtil.isValidNumber(parsed);
 
-    // set possible flag
-    phone.isPossible = phoneNumberUtil.isPossibleNumber(parsed);
+      // set possible flag
+      phone.isPossible = phoneNumberUtil.isPossibleNumber(parsed);
 
-    // set is valid for country(or region) code
-    phone.isValidForCountryCode =
-      phoneNumberUtil.isValidNumberForRegion(parsed, phone.countryCode);
+      // set is valid for country(or region) code
+      phone.isValidForCountryCode =
+        phoneNumberUtil.isValidNumberForRegion(parsed, phone.countryCode);
 
-    // set if is valid per given country codes
-    phone.isValidFor = {};
-    _.forEach(countryCodes, function isValidFor(code) {
-      phone.isValidFor[code] =
-        phoneNumberUtil.isValidNumberForRegion(parsed, code);
+      // set phone number type flags
+      phone = _.merge({}, phone, checkValidity(parsed));
+
+      // format phone number in accepted formats
+      phone = _.merge({}, phone, format(parsed));
+
+      // add e164 format with no plus
+      phone.e164NoPlus = phone.e164.replace(/\+/g, '');
+
+      // return parsed phone number
+      return phone;
+
     });
 
-    // set phone number type flags
-    phone = _.merge({}, phone, checkValidity(parsed));
-
-    // format phone number in accepted formats
-    phone = _.merge({}, phone, format(parsed));
-
-    // add e164 format with no plus
-    phone.e164NoPlus = phone.e164.replace(/\+/g, '');
-
-    // return parsed phone number
+    // return valid parsed or any
+    const phone = _.find(phones, { isValid: true });
     return phone;
   }
 
