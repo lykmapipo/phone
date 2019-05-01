@@ -44,11 +44,11 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-mocha-test": "^0.13.3",
     "jshint-stylish": "^2.2.1",
-    "mocha": "^6.1.3"
+    "mocha": "^6.1.4"
   },
   "dependencies": {
     "lodash": ">=4.17.11",
-    "@lykmapipo/env": ">=0.7.3",
+    "@lykmapipo/env": ">=0.7.4",
     "google-libphonenumber": ">=3.2.2",
     "os-locale": ">=3.1.0"
   },
