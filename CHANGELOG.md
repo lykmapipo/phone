@@ -1,3 +1,11 @@
+#### 0.3.3 (2019-05-01)
+
+##### Chores
+
+* **ci:**  force latest nodejs ([b11c9b15](https://github.com/lykmapipo/phone/commit/b11c9b153103c2b94c36ec2166839b07de5cda37))
+* **.npmrc:**  prevent npm version to commit and tag version ([6337e27c](https://github.com/lykmapipo/phone/commit/6337e27c1c85ef3b345f4207647e601c0b1dc10d))
+* **deps:**  force latest version & audit fix ([b8abfd7f](https://github.com/lykmapipo/phone/commit/b8abfd7f948667067045b6f13949d3a0dd2d0a68))
+
 #### 0.3.2 (2019-04-14)
 
 ##### Chores
