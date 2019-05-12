@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "lodash": ">=4.17.11",
-    "@lykmapipo/env": ">=0.7.4",
+    "@lykmapipo/env": ">=0.7.5",
     "google-libphonenumber": ">=3.2.2",
     "os-locale": ">=3.1.0"
   },
