@@ -43,12 +43,13 @@
     "grunt-contrib-jshint": "^2.1.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-mocha-test": "^0.13.3",
+    "handlebars": "^4.1.2",
     "jshint-stylish": "^2.2.1",
     "mocha": "^6.1.4"
   },
   "dependencies": {
     "lodash": ">=4.17.11",
-    "@lykmapipo/env": ">=0.7.7",
+    "@lykmapipo/env": ">=0.8.1",
     "google-libphonenumber": ">=3.2.2",
     "os-locale": ">=3.1.0"
   },
