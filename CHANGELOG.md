@@ -1,3 +1,9 @@
+#### 0.4.0 (2019-06-14)
+
+##### Bug Fixes
+
+*  allow multi country code raw phone number parsing ([c59c0e43](https://github.com/lykmapipo/phone/commit/c59c0e43597c37dacb30391a145a5fd5b01de4b3))
+
 #### 0.3.7 (2019-06-14)
 
 ##### Chores
