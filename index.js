@@ -3,23 +3,21 @@
 
 /* dependencies */
 const _ = require('lodash');
-const { getString, getStrings } = require('@lykmapipo/env');
-const { sync: getLocale } = require('os-locale');
-const { PhoneNumberFormat } = require('google-libphonenumber');
-const { PhoneNumberType } = require('google-libphonenumber');
-const { PhoneNumberUtil } = require('google-libphonenumber');
+const { uniq } = require('@lykmapipo/common');
+const { getStrings, getCountryCode } = require('@lykmapipo/env');
+const {
+  PhoneNumberFormat,
+  PhoneNumberType,
+  PhoneNumberUtil
+} = require('google-libphonenumber');
 const phoneNumberUtil = PhoneNumberUtil.getInstance();
 
 
 /* constants */
 const TYPES = _.keys(_.merge({}, PhoneNumberType));
 const FORMATS = _.keys(_.merge({}, PhoneNumberFormat));
-const OS_LOCALE = (getLocale() || getLocale({ spawn: false }));
-const OS_COUNTRY_CODE = _.toUpper(_.last(_.split(OS_LOCALE, '_')));
-
 
 /* helpers */
-
 
 /**
  * @name checkValidity
@@ -201,10 +199,9 @@ function _parsePhoneNumber(phoneNumber, ...countryCode) {
     const raw = _.clone(phoneNumber);
 
     // collect country codes
-    let countryCodes = [getString('DEFAULT_COUNTRY_CODE', OS_COUNTRY_CODE)];
-    countryCodes = getStrings('DEFAULT_COUNTRY_CODES', countryCodes);
-    countryCodes = _.compact(_.concat([], countryCodes, countryCode));
-    countryCodes = _.uniq(_.map(countryCodes, _.toUpper));
+    let countryCodes = getStrings('DEFAULT_COUNTRY_CODES', getCountryCode());
+    countryCodes = uniq([...countryCodes, ...countryCode]);
+    countryCodes = uniq(_.map(countryCodes, _.toUpper));
 
     // test parsing for provided country codes
     const phones = _.map(countryCodes, function _parse(_countryCode) {
@@ -247,7 +244,9 @@ function _parsePhoneNumber(phoneNumber, ...countryCode) {
       phone = _.merge({}, phone, format(parsed));
 
       // add e164 format with no plus
-      phone.e164NoPlus = phone.e164.replace(/\+/g, '');
+      if (phone.e164) {
+        phone.e164NoPlus = phone.e164.replace(/\+/g, '');
+      }
 
       // return parsed phone number
       return phone;
