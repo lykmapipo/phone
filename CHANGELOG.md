@@ -1,3 +1,9 @@
+#### 0.4.2 (2019-06-16)
+
+##### Chores
+
+* **deps:**  force latest version & audit fix ([feb97dfc](https://github.com/lykmapipo/phone/commit/feb97dfc71127ab02ef6aea5da7839b4739d957b))
+
 #### 0.4.1 (2019-06-14)
 
 #### 0.4.0 (2019-06-14)
