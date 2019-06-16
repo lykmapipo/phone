@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/lykmapipo/phone",
   "devDependencies": {
-    "@lykmapipo/test-helpers": "^0.2.7",
+    "@lykmapipo/test-helpers": "^0.2.8",
     "chai": "^4.2.0",
     "grunt": "^1.0.4",
     "grunt-contrib-jshint": "^2.1.0",
@@ -49,8 +49,8 @@
     "mocha": "^6.1.4"
   },
   "dependencies": {
-    "@lykmapipo/common": ">=0.20.3",
-    "@lykmapipo/env": ">=0.9.0",
+    "@lykmapipo/common": ">=0.21.0",
+    "@lykmapipo/env": ">=0.9.1",
     "google-libphonenumber": ">=3.2.2",
     "lodash": ">=4.17.11",
     "os-locale": ">=4.0.0"
