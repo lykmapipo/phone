@@ -1,3 +1,9 @@
+#### 0.5.0 (2019-06-16)
+
+##### New Features
+
+*  add toE64 shortcut helper ([fa7fa34d](https://github.com/lykmapipo/phone/commit/fa7fa34dd92bcfa71da28062dd2e3c9d535022b4))
+
 #### 0.4.2 (2019-06-16)
 
 ##### Chores
