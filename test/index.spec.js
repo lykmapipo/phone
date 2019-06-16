@@ -14,7 +14,7 @@ process.env.DEFAULT_COUNTRY_CODES = 'TZ,US';
 
 /* import */
 const phone = require(path.join(__dirname, '..'));
-const { TYPES, FORMATS, parsePhoneNumber } = phone;
+const { TYPES, FORMATS, parsePhoneNumber, toE164 } = phone;
 
 
 describe('phone', () => {
@@ -223,5 +223,20 @@ describe('phone', () => {
     expect(phoneNumber.rfc3966).to.exist;
   });
 
+  it('should expose toE164 formatter', () => {
+    expect(toE164).to.exist;
+    expect(toE164).to.be.a('function');
+  });
 
+  it('should use default country code', () => {
+    const phoneNumber = toE164('0714969698');
+    expect(phoneNumber).to.exist;
+    expect(phoneNumber).to.be.eql('255714969698');
+  });
+
+  it('should use country code param', () => {
+    const phoneNumber = toE164('254714969698', 'KE');
+    expect(phoneNumber).to.exist;
+    expect(phoneNumber).to.be.eql('254714969698');
+  });
 });
