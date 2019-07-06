@@ -46,12 +46,13 @@
     "grunt-mocha-test": "^0.13.3",
     "handlebars": "^4.1.2",
     "jshint-stylish": "^2.2.1",
-    "mocha": "^6.1.4"
+    "mocha": "^6.1.4",
+    "shelljs": "^0.8.3"
   },
   "dependencies": {
-    "@lykmapipo/common": ">=0.22.2",
-    "@lykmapipo/env": ">=0.9.4",
-    "google-libphonenumber": ">=3.2.2",
+    "@lykmapipo/common": ">=0.22.3",
+    "@lykmapipo/env": ">=0.9.5",
+    "google-libphonenumber": ">=3.2.3",
     "lodash": ">=4.17.11"
   },
   "engines": {
