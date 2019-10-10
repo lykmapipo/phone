@@ -38,20 +38,20 @@
   },
   "homepage": "https://github.com/lykmapipo/phone",
   "devDependencies": {
-    "@lykmapipo/test-helpers": "^0.4.3",
+    "@lykmapipo/test-helpers": "^0.4.6",
     "chai": "^4.2.0",
     "grunt": "^1.0.4",
     "grunt-contrib-jshint": "^2.1.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-mocha-test": "^0.13.3",
-    "handlebars": "^4.3.0",
+    "handlebars": "^4.4.3",
     "jshint-stylish": "^2.2.1",
-    "mocha": "^6.2.0",
+    "mocha": "^6.2.1",
     "shelljs": "^0.8.3"
   },
   "dependencies": {
-    "@lykmapipo/common": ">=0.26.4",
-    "@lykmapipo/env": ">=0.14.1",
+    "@lykmapipo/common": ">=0.28.3",
+    "@lykmapipo/env": ">=0.14.6",
     "google-libphonenumber": ">=3.2.5",
     "lodash": ">=4.17.15"
   },
