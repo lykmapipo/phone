@@ -1,3 +1,9 @@
+#### 0.5.20 (2020-03-30)
+
+##### Chores
+
+* **deps:**  force latest version & audit fix ([78a28fd0](https://github.com/lykmapipo/phone/commit/78a28fd027c6bede3fcc80295b70676401cba402))
+
 #### 0.5.19 (2020-03-06)
 
 ##### Chores
