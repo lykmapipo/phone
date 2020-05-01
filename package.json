@@ -1,6 +1,6 @@
 {
   "name": "@lykmapipo/phone",
-  "version": "0.5.22",
+  "version": "0.6.0",
   "description": "Helper utilities for parsing and validate phone numbers",
   "main": "index.js",
   "scripts": {

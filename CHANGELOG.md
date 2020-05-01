@@ -1,3 +1,9 @@
+#### 0.6.0 (2020-05-01)
+
+##### Refactors
+
+*  honor passed country codes on parsing ([04bd6d5b](https://github.com/lykmapipo/phone/commit/04bd6d5ba103deab29af478f272121d95025c56b))
+
 #### 0.5.22 (2020-04-25)
 
 ##### Chores
