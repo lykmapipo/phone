@@ -200,7 +200,7 @@ function _parsePhoneNumber(phoneNumber, ...countryCode) {
 
     // collect country codes
     let countryCodes = getStrings('DEFAULT_COUNTRY_CODES', getCountryCode());
-    countryCodes = uniq([...countryCodes, ...countryCode]);
+    countryCodes = uniq([...countryCode, ...countryCodes]);
     countryCodes = uniq(_.map(countryCodes, _.toUpper));
 
     // test parsing for provided country codes
