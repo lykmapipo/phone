@@ -1,14 +1,24 @@
 {
   "name": "@lykmapipo/phone",
-  "version": "0.6.11",
+  "version": "0.4.14",
   "description": "Helper utilities for parsing and validate phone numbers",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "scripts": {
-    "test": "NODE_ENV=test grunt test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/lykmapipo/phone.git"
+    "clean": "rimraf lib dist es umd logs",
+    "prebuild": "npm test && npm run clean",
+    "build": "rollup -c",
+    "lint": "eslint --fix --ext .js src/ test/ rollup.config.js",
+    "pretest": "npm run lint",
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha --exit --timeout=8000 --require @babel/register test/**/*.spec.js",
+    "test:unit": "NODE_ENV=test npm run pretest && NODE_ENV=test mocha --exit --timeout=8000 --require @babel/register test/unit/**/*.spec.js",
+    "test:integration": "NODE_ENV=test npm run pretest && NODE_ENV=test mocha --exit --timeout=8000 --require @babel/register test/integration/**/*.spec.js",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "docs": "doxdox 'lib/**/*.js' -p package.json -l markdown -o DOCUMENTATION.md",
+    "cmt": "git add -A && git-cz",
+    "changelog": "changelog",
+    "chore:deps": "ncu -u && npm install --save",
+    "lint:config": "eslint --print-config rollup.config.js"
   },
   "keywords": [
     "lykmapipo",
@@ -24,6 +34,15 @@
     "parse",
     "validate"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lykmapipo/phone.git"
+  },
+  "author": {
+    "name": "lykmapipo",
+    "email": "lallyelias87@gmail.com",
+    "url": "https://github.com/lykmapipo"
+  },
   "contributors": [
     {
       "name": "lykmapipo",
@@ -33,22 +52,46 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lykmapipo/phone/issues",
-    "email": "lallyelias87@gmail.com"
+    "url": "https://github.com/lykmapipo/phone/issues"
   },
-  "homepage": "https://github.com/lykmapipo/phone",
+  "homepage": "https://github.com/lykmapipo/phone#readme",
   "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/register": "^7.10.5",
+    "@commitlint/cli": "^9.1.2",
+    "@commitlint/config-conventional": "^9.1.1",
+    "@commitlint/travis-cli": "^9.1.1",
     "@lykmapipo/test-helpers": "^0.5.28",
     "chai": "^4.2.0",
-    "grunt": "^1.2.1",
-    "grunt-contrib-jshint": "^2.1.0",
-    "grunt-contrib-watch": "^1.1.0",
-    "grunt-mocha-test": "^0.13.3",
+    "commitizen": "^4.1.2",
+    "coveralls": "^3.1.0",
+    "cz-conventional-changelog": "^3.2.0",
+    "doxdox": "^3.0.0",
+    "eslint": "^7.5.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsdoc": "^30.0.0",
+    "eslint-plugin-mocha": "^7.0.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "generate-changelog": "^1.8.0",
     "handlebars": "^4.7.6",
-    "jshint-stylish": "^2.2.1",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "lodash.template": "^4.5.0",
     "mocha": "^8.0.1",
+    "nock": "^13.0.2",
+    "npm-check-updates": "^7.0.2",
+    "nyc": "^15.1.0",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.22.1",
     "shelljs": "^0.8.4"
   },
+  "peerDependencies": {},
   "dependencies": {
     "@lykmapipo/common": ">=0.37.4",
     "@lykmapipo/env": ">=0.17.14",
@@ -56,7 +99,29 @@
     "lodash": ">=4.17.19"
   },
   "engines": {
-    "node": ">=8.11.1",
-    "npm": ">=5.6.0"
+    "node": ">=12.4.0",
+    "npm": ">=6.9.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "npm run lint",
+      "git add -A"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }

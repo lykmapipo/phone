@@ -1,21 +1,27 @@
-'use strict';
-
-
-/* dependencies */
-const _ = require('lodash');
-const { uniq } = require('@lykmapipo/common');
-const { getStrings, getCountryCode } = require('@lykmapipo/env');
-const {
+import {
+  clone,
+  camelCase,
+  find,
+  forEach,
+  keys,
+  map,
+  merge,
+  toLower,
+  toUpper,
+} from 'lodash';
+import { uniq } from '@lykmapipo/common';
+import { getStrings, getCountryCode } from '@lykmapipo/env';
+import {
   PhoneNumberFormat,
   PhoneNumberType,
-  PhoneNumberUtil
-} = require('google-libphonenumber');
+  PhoneNumberUtil,
+} from 'google-libphonenumber';
+
 const phoneNumberUtil = PhoneNumberUtil.getInstance();
 
-
 /* constants */
-const TYPES = _.keys(_.merge({}, PhoneNumberType));
-const FORMATS = _.keys(_.merge({}, PhoneNumberFormat));
+const PHONE_NUMBER_TYPES = keys(merge({}, PhoneNumberType));
+const PHONE_NUMBER_FORMATS = keys(merge({}, PhoneNumberFormat));
 
 /* helpers */
 
@@ -23,8 +29,8 @@ const FORMATS = _.keys(_.merge({}, PhoneNumberFormat));
  * @name checkValidity
  * @function checkValidity
  * @description derive phone number type validity
- * @param {PhoneNumber} phoneNumber an instance of parsed phone number
- * @return {Object} phone number type validity
+ * @param {object} phoneNumber an instance of parsed phone number
+ * @returns {object} phone number type validity
  * @author lally elias <lallyelias87@gmail.com>
  * @license MIT
  * @since 0.1.0
@@ -52,35 +58,31 @@ const FORMATS = _.keys(_.merge({}, PhoneNumberFormat));
  * }
  *
  */
-function checkValidity(phoneNumber) {
-
+const checkValidity = (phoneNumber) => {
   // initialize types validity
   let types = {};
 
   try {
-
     // obtain parsed phone number type
-    const phoneNumberType =
-      phoneNumberUtil.getNumberType(phoneNumber);
+    const phoneNumberType = phoneNumberUtil.getNumberType(phoneNumber);
 
     // obtain available phone number types
-    const phoneNumberTypes = _.merge({}, PhoneNumberType);
+    const phoneNumberTypes = merge({}, PhoneNumberType);
 
     // check phone number type validity
-    _.forEach(phoneNumberTypes, function checkType(typeIndex, typeName) {
-
+    forEach(phoneNumberTypes, function checkType(typeIndex, typeName) {
       // derive type name and check phone number type
-      const _typeName = _.camelCase(`is${typeName}`);
-      const _typeIs = (phoneNumberType === typeIndex);
+      const numberTypeName = camelCase(`is${typeName}`);
+      const numberTypeIs = phoneNumberType === typeIndex;
 
       // set type is flag
-      types[_typeName] = _typeIs;
+      types[numberTypeName] = numberTypeIs;
 
-      //set type name string
-      if (_typeIs) { types.type = typeName; }
-
+      // set type name string
+      if (numberTypeIs) {
+        types.type = typeName;
+      }
     });
-
   } catch (error) {
     // handle unknown types
     types = undefined;
@@ -88,16 +90,14 @@ function checkValidity(phoneNumber) {
 
   // return types validity
   return types;
-
-}
-
+};
 
 /**
  * @name format
  * @function format
  * @description format phone number using available phone number formats
- * @param {PhoneNumber} phoneNumber an instance of parsed phone number
- * @return {Object} formated phone number(s)
+ * @param {object} phoneNumber an instance of parsed phone number
+ * @returns {object} formated phone number(s)
  * @author lally elias <lallyelias87@gmail.com>
  * @license MIT
  * @since 0.1.0
@@ -116,24 +116,23 @@ function checkValidity(phoneNumber) {
  * }
  *
  */
-function format(phoneNumber) {
-
+const format = (phoneNumber) => {
   // initialize formats
   let formats = {};
 
   try {
-
-    //obtain available phone number formats
-    const phoneNumberFormats = _.merge({}, PhoneNumberFormat);
+    // obtain available phone number formats
+    const phoneNumberFormats = merge({}, PhoneNumberFormat);
 
     // format phone number
-    _.forEach(phoneNumberFormats, function formatNumber(value, key) {
-      const format = _.toLower(key);
-      const formatValue =
-        phoneNumberUtil.format(phoneNumber, phoneNumberFormats[key]);
-      formats[format] = formatValue;
+    forEach(phoneNumberFormats, function formatNumber(value, key) {
+      const numberFormat = toLower(key);
+      const formatValue = phoneNumberUtil.format(
+        phoneNumber,
+        phoneNumberFormats[key]
+      );
+      formats[numberFormat] = formatValue;
     });
-
   } catch (error) {
     // handle unknown formats
     formats = undefined;
@@ -141,19 +140,17 @@ function format(phoneNumber) {
 
   // return formatted phone number
   return formats;
-
-}
-
+};
 
 /**
- * @name _parsePhoneNumber
- * @function _parsePhoneNumber
+ * @name parsePhoneNumber
+ * @function parsePhoneNumber
  * @description parse provided phone number to obtain its information
- * @param {String} phoneNumber a valid phone number
- * @param {...String} countryCode a valid country code(s) for validation. If not
+ * @param {string} phoneNumber a valid phone number
+ * @param {...string} countryCode a valid country code(s) for validation. If not
  * provided process.env.DEFAULT_COUNTRY_CODE or os country code will be used as
  * as default
- * @return {Object|undefined} phone number type validity
+ * @returns {object | undefined} phone number type validity
  * @author lally elias <lallyelias87@gmail.com>
  * @license MIT
  * @since 0.1.0
@@ -161,7 +158,7 @@ function format(phoneNumber) {
  * @private
  * @example
  *
- * const infor = _parsePhoneNumber('+255715333777');
+ * const infor = parsePhoneNumber('+255715333777');
  *
  * // result
  * {
@@ -192,20 +189,18 @@ function format(phoneNumber) {
  * }
  *
  */
-function _parsePhoneNumber(phoneNumber, ...countryCode) {
-
+export const parsePhoneNumber = (phoneNumber, ...countryCode) => {
   try {
     // ensure raw phone number
-    const raw = _.clone(phoneNumber);
+    const raw = clone(phoneNumber);
 
     // collect country codes
     let countryCodes = getStrings('DEFAULT_COUNTRY_CODES', getCountryCode());
     countryCodes = uniq([...countryCode, ...countryCodes]);
-    countryCodes = uniq(_.map(countryCodes, _.toUpper));
+    countryCodes = uniq(map(countryCodes, toUpper));
 
     // test parsing for provided country codes
-    const phones = _.map(countryCodes, function _parse(_countryCode) {
-
+    const phones = map(countryCodes, function _parse(_countryCode) {
       // parse phone number
       const parsed = phoneNumberUtil.parseAndKeepRawInput(raw, _countryCode);
 
@@ -217,15 +212,14 @@ function _parsePhoneNumber(phoneNumber, ...countryCode) {
 
       // set phone country code
       phone.countryCode =
-        (phoneNumberUtil.getRegionCodeForNumber(parsed) || _countryCode);
+        phoneNumberUtil.getRegionCodeForNumber(parsed) || _countryCode;
 
       // set phone country calling code
       phone.callingCode =
-        (parsed.getCountryCode() || parsed.getCountryCodeOrDefault());
+        parsed.getCountryCode() || parsed.getCountryCodeOrDefault();
 
       // set phone number extension
-      phone.extension =
-        (parsed.getExtension() || parsed.getExtensionOrDefault());
+      phone.extension = parsed.getExtension() || parsed.getExtensionOrDefault();
 
       // set phone number valid flag
       phone.isValid = phoneNumberUtil.isValidNumber(parsed);
@@ -234,14 +228,16 @@ function _parsePhoneNumber(phoneNumber, ...countryCode) {
       phone.isPossible = phoneNumberUtil.isPossibleNumber(parsed);
 
       // set is valid for country(or region) code
-      phone.isValidForCountryCode =
-        phoneNumberUtil.isValidNumberForRegion(parsed, phone.countryCode);
+      phone.isValidForCountryCode = phoneNumberUtil.isValidNumberForRegion(
+        parsed,
+        phone.countryCode
+      );
 
       // set phone number type flags
-      phone = _.merge({}, phone, checkValidity(parsed));
+      phone = merge({}, phone, checkValidity(parsed));
 
       // format phone number in accepted formats
-      phone = _.merge({}, phone, format(parsed));
+      phone = merge({}, phone, format(parsed));
 
       // add e164 format with no plus
       if (phone.e164) {
@@ -250,24 +246,18 @@ function _parsePhoneNumber(phoneNumber, ...countryCode) {
 
       // return parsed phone number
       return phone;
-
     });
 
     // return valid parsed or any
-    const phone = _.find(phones, { isValid: true });
+    const phone = find(phones, { isValid: true });
     return phone;
-  }
-
-  // fail to parse phone number
-  catch (error) {
+  } catch (error) {
+    // fail to parse phone number
     return undefined;
   }
-
-}
-
+};
 
 /* exports */
-
 
 /**
  * @name TYPES
@@ -283,11 +273,12 @@ function _parsePhoneNumber(phoneNumber, ...countryCode) {
  * const { TYPES, TYPE_MOBILE } = phone;
  *
  */
-exports.TYPES = [].concat(TYPES);
-_.forEach([].concat(TYPES), function exportType(type) {
-  exports[_.toUpper(`TYPE_${type}`)] = type;
-});
+export const TYPES = [].concat(PHONE_NUMBER_TYPES);
 
+// TODO: re-exports on default
+forEach([].concat(PHONE_NUMBER_TYPES), (phoneNumberType) => {
+  parsePhoneNumber[toUpper(`TYPE_${phoneNumberType}`)] = phoneNumberType;
+});
 
 /**
  * @name FORMATS
@@ -303,49 +294,48 @@ _.forEach([].concat(TYPES), function exportType(type) {
  * const { FORMATS, FORMAT_E164 } = phone;
  *
  */
-exports.FORMATS = [].concat(FORMATS);
-_.forEach([].concat(FORMATS), function exportFormat(format) {
-  exports[_.toUpper(`FORMAT_${format}`)] = format;
+export const FORMATS = [].concat(PHONE_NUMBER_FORMATS);
+
+// TODO: re-export on default
+forEach([].concat(PHONE_NUMBER_FORMATS), (phoneNumberFormat) => {
+  parsePhoneNumber[toUpper(`FORMAT_${phoneNumberFormat}`)] = phoneNumberFormat;
 });
 
 /**
  * @name toE164
  * @description format provided mobile phone number to E.164 format
- * @param {String} phoneNumber a mobile phone number to be formatted
- * @param {String} [country] 2 or 3 letter ISO country code
- * @return {String} E.164 formated phone number without leading plus sign
+ * @param {string} phoneNumber a mobile phone number to be formatted
+ * @param {string} [countryCode] 2 or 3 letter ISO country code
+ * @returns {string} E.164 formated phone number without leading plus sign
  * @see {@link https://en.wikipedia.org/wiki/E.164|e.164}
  * @author lally elias <lallyelias87@mail.com>
  * @since 0.1.0
  * @version 0.1.0
  * @public
  */
-exports.toE164 = function toE164(phoneNumber, countryCode) {
+export const toE164 = (phoneNumber, countryCode) => {
   // try convert give phone number to e.164
   try {
-    const parsedNumber = _parsePhoneNumber(phoneNumber, countryCode);
+    const parsedNumber = parsePhoneNumber(phoneNumber, countryCode);
     if (parsedNumber && parsedNumber.e164NoPlus) {
       return parsedNumber.e164NoPlus;
     }
     return phoneNumber;
-  }
-
-  // fail to convert, return original format
-  catch (error) {
+  } catch (error) {
+    // fail to convert, return original format
     return phoneNumber;
   }
 };
-
 
 /**
  * @name parsePhoneNumber
  * @function parsePhoneNumber
  * @description parse provided phone number to obtain its information
- * @param {String} phoneNumber a valid phone number
- * @param {String} countryCode a valid country code for validation. If not
+ * @param {string} phoneNumber a valid phone number
+ * @param {string} countryCode a valid country code for validation. If not
  * provided process.env.DEFAULT_COUNTRY_CODE or os country code will be used as
  * as default
- * @return {Object} phone number type validity
+ * @returns {object} phone number type validity
  * @author lally elias <lallyelias87@gmail.com>
  * @license MIT
  * @since 0.1.0
@@ -385,4 +375,5 @@ exports.toE164 = function toE164(phoneNumber, countryCode) {
  * }
  *
  */
-exports = exports.parsePhoneNumber = _parsePhoneNumber;
+// exports = exports.parsePhoneNumber = parsePhoneNumber;
+export default parsePhoneNumber;

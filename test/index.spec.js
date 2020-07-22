@@ -1,24 +1,10 @@
-'use strict';
+import _ from 'lodash';
+import { expect } from '@lykmapipo/test-helpers';
+import phone, { TYPES, FORMATS, parsePhoneNumber, toE164 } from '../src/index';
 
-
-/* dependencies */
-const path = require('path');
-const _ = require('lodash');
-const { expect } = require('@lykmapipo/test-helpers');
-
-
-/* .env */
-process.env.DEFAULT_COUNTRY_CODE = 'TZ';
-process.env.DEFAULT_COUNTRY_CODES = 'TZ,US';
-
-
-/* import */
-const phone = require(path.join(__dirname, '..'));
-const { TYPES, FORMATS, parsePhoneNumber, toE164 } = phone;
-
+// const { TYPES, FORMATS, parsePhoneNumber, toE164 } = phone;
 
 describe('phone', () => {
-
   it('should exports phone number types', () => {
     expect(TYPES).to.exist;
     expect(TYPES).to.be.an('array');
