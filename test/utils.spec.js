@@ -18,6 +18,8 @@ import {
   FORMAT_NATIONAL,
   FORMAT_RFC3966,
   FORMATS,
+  phoneNumberUtil,
+  parseRawPhoneNumber,
 } from '../src/utils';
 
 describe('phone utils', () => {
@@ -66,5 +68,24 @@ describe('phone utils', () => {
       FORMAT_NATIONAL,
       FORMAT_RFC3966,
     ]);
+  });
+
+  it('should exports phone number util instance', () => {
+    expect(phoneNumberUtil).to.exist;
+    expect(phoneNumberUtil.parseAndKeepRawInput).to.exist.and.be.a('function');
+  });
+
+  it('should parse raw phone number', () => {
+    expect(parseRawPhoneNumber).to.exist.and.be.a('function');
+    expect(parseRawPhoneNumber('+255715333777')).to.exist;
+    expect(parseRawPhoneNumber('+255715333777', 'TZ')).to.exist;
+    expect(parseRawPhoneNumber('255715333777', 'TZ')).to.exist;
+    expect(parseRawPhoneNumber('0715333777')).to.exist;
+    expect(parseRawPhoneNumber('0715333777', 'TZ')).to.exist;
+    expect(parseRawPhoneNumber('0715333777', 'TTT')).to.be.undefined;
+    expect(parseRawPhoneNumber(null)).to.be.undefined;
+    expect(parseRawPhoneNumber(undefined)).to.be.undefined;
+    expect(parseRawPhoneNumber('')).to.be.undefined;
+    expect(parseRawPhoneNumber(' ')).to.be.undefined;
   });
 });

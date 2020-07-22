@@ -8,15 +8,11 @@ import toLower from 'lodash/toLower';
 import toUpper from 'lodash/toUpper';
 import { uniq } from '@lykmapipo/common';
 import { getStringSet, getCountryCode } from '@lykmapipo/env';
-import {
-  PhoneNumberFormat,
-  PhoneNumberType,
-  PhoneNumberUtil,
-} from 'google-libphonenumber';
+import { PhoneNumberFormat, PhoneNumberType } from 'google-libphonenumber';
+
+import { phoneNumberUtil, parseRawPhoneNumber } from './utils';
 
 export * from './utils';
-
-const phoneNumberUtil = PhoneNumberUtil.getInstance();
 
 /* helpers */
 
@@ -207,10 +203,7 @@ export const parsePhoneNumber = (phoneNumber, ...countryCode) => {
     // parse phone number per country code
     const parseByCountryCode = (givenCountryCode) => {
       // parse phone number
-      const parsed = phoneNumberUtil.parseAndKeepRawInput(
-        raw,
-        givenCountryCode
-      );
+      const parsed = parseRawPhoneNumber(raw, givenCountryCode);
 
       // prepare parse phone number result
       let phone = {};
