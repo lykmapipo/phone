@@ -1,11 +1,13 @@
 import clone from 'lodash/clone';
+import forEach from 'lodash/forEach';
 import keys from 'lodash/keys';
+import toLower from 'lodash/toLower';
 import {
   PhoneNumberFormat,
   PhoneNumberType,
   PhoneNumberUtil,
 } from 'google-libphonenumber';
-import { sortedUniq } from '@lykmapipo/common';
+import { mergeObjects, sortedUniq } from '@lykmapipo/common';
 import { getCountryCode } from '@lykmapipo/env';
 
 /**
@@ -82,7 +84,7 @@ export const FORMAT_RFC3966 = 'RFC3966';
  *
  * import { phoneNumberUtil } from '@lykmapipo/phone';
  *
- * phoneNumberUtil(number);
+ * phoneNumberUtil.parseAndKeepRawInput('0715333777', 'TZ');
  *
  */
 export const phoneNumberUtil = PhoneNumberUtil.getInstance();
@@ -125,4 +127,88 @@ export const parseRawPhoneNumber = (
     // fail to parse phone number
     return undefined;
   }
+};
+
+/**
+ * @name formatPhoneNumber
+ * @function formatPhoneNumber
+ * @description Format phone number use given format
+ * @param {object} phoneNumber Valid instance of parsed phone number
+ * @param {string} [format] Valid phone number format
+ * @returns {object} Formatted phone number
+ * @author lally elias <lallyelias87@gmail.com>
+ * @license MIT
+ * @since 0.5.0
+ * @version 0.1.0
+ * @private
+ * @example
+ *
+ * import { formatPhoneNumber, FORMAT_E164 } from '@lykmapipo/phone';
+ *
+ * const phoneNumber = parseRawPhoneNumber('0715333777', 'TZ');
+ * formatPhoneNumber(phoneNumber, FORMAT_E164);
+ *
+ * //=> result
+ * {
+ *   e164: '+255715333777'
+ * }
+ *
+ */
+export const formatPhoneNumber = (phoneNumber, format) => {
+  try {
+    // try format parsed phone number
+    const phoneNumberFormat = toLower(format);
+    const formattedPhoneNumber = phoneNumberUtil.format(
+      phoneNumber,
+      PhoneNumberFormat[format]
+    );
+    return { [phoneNumberFormat]: formattedPhoneNumber };
+  } catch (e) {
+    // fail to format phone number
+    return {};
+  }
+};
+
+/**
+ * @name format
+ * @function format
+ * @description Format phone number using available phone number formats
+ * @param {object} phoneNumber Instance of parsed phone number
+ * @returns {object} Formatted phone number(s)
+ * @author lally elias <lallyelias87@gmail.com>
+ * @license MIT
+ * @since 0.1.0
+ * @version 0.2.0
+ * @private
+ * @example
+ *
+ * import { format } from '@lykmapipo/phone';
+ *
+ * const phoneNumber = parseRawPhoneNumber('0715333777', 'TZ');
+ * format(phoneNumber);
+ *
+ * //=> result
+ * {
+ *  e164: '+255715333777',
+ *  international: '+255 715 333 777',
+ *  national: '0715 333 777',
+ *  rfc3966: 'tel:+255-715-333-777'
+ * }
+ *
+ */
+export const format = (phoneNumber) => {
+  // initialize formats
+  let formats = {};
+
+  // format phone number per each available format
+  forEach(FORMATS, (phoneNumberFormat) => {
+    const formattedPhoneNumber = formatPhoneNumber(
+      phoneNumber,
+      phoneNumberFormat
+    );
+    formats = mergeObjects(formats, formattedPhoneNumber);
+  });
+
+  // return formatted phone number
+  return formats;
 };

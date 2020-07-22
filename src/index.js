@@ -4,13 +4,12 @@ import find from 'lodash/find';
 import forEach from 'lodash/forEach';
 import map from 'lodash/map';
 import merge from 'lodash/merge';
-import toLower from 'lodash/toLower';
 import toUpper from 'lodash/toUpper';
 import { uniq } from '@lykmapipo/common';
 import { getStringSet, getCountryCode } from '@lykmapipo/env';
-import { PhoneNumberFormat, PhoneNumberType } from 'google-libphonenumber';
+import { PhoneNumberType } from 'google-libphonenumber';
 
-import { phoneNumberUtil, parseRawPhoneNumber } from './utils';
+import { phoneNumberUtil, parseRawPhoneNumber, format } from './utils';
 
 export * from './utils';
 
@@ -84,59 +83,6 @@ const checkValidity = (phoneNumber) => {
 
   // return types validity
   return types;
-};
-
-/**
- * @name format
- * @function format
- * @description Format phone number using available phone number formats
- * @param {object} phoneNumber Instance of parsed phone number
- * @returns {object} Formatted phone number(s)
- * @author lally elias <lallyelias87@gmail.com>
- * @license MIT
- * @since 0.1.0
- * @version 0.1.0
- * @private
- * @example
- *
- * const formats = format(phoneNumber);
- *
- * //=> result
- * {
- *  e164: '+255715333777',
- *  international: '+255 715 333 777',
- *  national: '0715 333 777',
- *  rfc3966: 'tel:+255-715-333-777'
- * }
- *
- */
-const format = (phoneNumber) => {
-  // initialize formats
-  let formats = {};
-
-  try {
-    // obtain available phone number formats
-    const phoneNumberFormats = merge({}, PhoneNumberFormat);
-
-    // format number
-    const formatNumber = (value, key) => {
-      const numberFormat = toLower(key);
-      const formatValue = phoneNumberUtil.format(
-        phoneNumber,
-        phoneNumberFormats[key]
-      );
-      formats[numberFormat] = formatValue;
-    };
-
-    // format phone number
-    forEach(phoneNumberFormats, formatNumber);
-  } catch (error) {
-    // handle unknown formats
-    formats = undefined;
-  }
-
-  // return formatted phone number
-  return formats;
 };
 
 /**
