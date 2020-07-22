@@ -22,7 +22,7 @@ import {
   parseRawPhoneNumber,
   formatPhoneNumber,
   format,
-  checkValidity,
+  checkTypes,
 } from '../src/utils';
 
 describe('phone utils', () => {
@@ -140,8 +140,8 @@ describe('phone utils', () => {
   });
 
   it('should get phone number types', () => {
-    expect(checkValidity).to.be.a('function');
-    expect(checkValidity(parseRawPhoneNumber('+255715333777'))).to.be.eql({
+    expect(checkTypes).to.be.a('function');
+    expect(checkTypes(parseRawPhoneNumber('+255715333777'))).to.be.eql({
       isFixedLine: false,
       isFixedLineOrMobile: false,
       isMobile: true,

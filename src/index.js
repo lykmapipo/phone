@@ -10,7 +10,7 @@ import {
   phoneNumberUtil,
   parseRawPhoneNumber,
   format,
-  checkValidity,
+  checkTypes,
 } from './utils';
 
 export * from './utils';
@@ -113,7 +113,7 @@ export const parsePhoneNumber = (phoneNumber, ...countryCode) => {
       );
 
       // set phone number type flags
-      phone = merge({}, phone, checkValidity(parsed));
+      phone = merge({}, phone, checkTypes(parsed));
 
       // format phone number in accepted formats
       phone = merge({}, phone, format(parsed));

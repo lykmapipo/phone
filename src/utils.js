@@ -215,8 +215,8 @@ export const format = (phoneNumber) => {
 };
 
 /**
- * @name checkValidity
- * @function checkValidity
+ * @name checkTypes
+ * @function checkTypes
  * @description Derive phone number type validity
  * @param {object} phoneNumber Instance of parsed phone number
  * @returns {object} Validities of a phone number
@@ -227,10 +227,10 @@ export const format = (phoneNumber) => {
  * @private
  * @example
  *
- * import { checkValidity } from '@lykmapipo/phone';
+ * import { checkTypes } from '@lykmapipo/phone';
  *
  * const phoneNumber = parseRawPhoneNumber('0715333777', 'TZ');
- * checkValidity(phoneNumber);
+ * checkTypes(phoneNumber);
  *
  * //=> result
  * {
@@ -250,7 +250,7 @@ export const format = (phoneNumber) => {
  * }
  *
  */
-export const checkValidity = (phoneNumber) => {
+export const checkTypes = (phoneNumber) => {
   // initialize types validity
   const types = {};
 
