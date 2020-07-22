@@ -23,9 +23,9 @@ const phoneNumberUtil = PhoneNumberUtil.getInstance();
 /**
  * @name checkValidity
  * @function checkValidity
- * @description derive phone number type validity
- * @param {object} phoneNumber an instance of parsed phone number
- * @returns {object} phone number type validity
+ * @description Derive phone number type validity
+ * @param {object} phoneNumber Instance of parsed phone number
+ * @returns {object} Validities of a phone number
  * @author lally elias <lallyelias87@gmail.com>
  * @license MIT
  * @since 0.1.0
@@ -35,7 +35,7 @@ const phoneNumberUtil = PhoneNumberUtil.getInstance();
  *
  * const validity = checkValidity(number);
  *
- * // result
+ * //=> result
  * {
  *  isFixedLine: false,
  *  isMobile: true,
@@ -93,9 +93,9 @@ const checkValidity = (phoneNumber) => {
 /**
  * @name format
  * @function format
- * @description format phone number using available phone number formats
- * @param {object} phoneNumber an instance of parsed phone number
- * @returns {object} formated phone number(s)
+ * @description Format phone number using available phone number formats
+ * @param {object} phoneNumber Instance of parsed phone number
+ * @returns {object} Formatted phone number(s)
  * @author lally elias <lallyelias87@gmail.com>
  * @license MIT
  * @since 0.1.0
@@ -105,7 +105,7 @@ const checkValidity = (phoneNumber) => {
  *
  * const formats = format(phoneNumber);
  *
- * // result
+ * //=> result
  * {
  *  e164: '+255715333777',
  *  international: '+255 715 333 777',
@@ -146,22 +146,26 @@ const format = (phoneNumber) => {
 /**
  * @name parsePhoneNumber
  * @function parsePhoneNumber
- * @description parse provided phone number to obtain its information
- * @param {string} phoneNumber a valid phone number
- * @param {...string} countryCode a valid country code(s) for validation. If not
- * provided process.env.DEFAULT_COUNTRY_CODE or os country code will be used as
- * as default
- * @returns {object | undefined} phone number type validity
+ * @description Parse provided phone number to obtain its information
+ * @param {string} phoneNumber Valid phone number
+ * @param {...string} [countryCode] Valid country code(s) for validation. If
+ * not provided `process.env.DEFAULT_COUNTRY_CODE` or `os country code` will
+ * be used as a default
+ * @returns {object | undefined} Parsed phone number or undefined
  * @author lally elias <lallyelias87@gmail.com>
  * @license MIT
  * @since 0.1.0
  * @version 0.1.0
- * @private
+ * @public
+ * @static
  * @example
  *
- * const infor = parsePhoneNumber('+255715333777');
+ * import { parsePhoneNumber } from '@lykmapipo/phone';
  *
- * // result
+ * const phoneNumber = parsePhoneNumber('+255715333777');
+ * const phoneNumber = parsePhoneNumber('+255715333777', 'TZ');
+ *
+ * //=> result
  * {
  *  raw: '+255715333777',
  *  countryCode: 'TZ',
@@ -268,15 +272,27 @@ export const parsePhoneNumber = (phoneNumber, ...countryCode) => {
 
 /**
  * @name toE164
- * @description format provided mobile phone number to E.164 format
+ * @function toE164
+ * @description Format provided mobile phone number to E.164 format
  * @param {string} phoneNumber a mobile phone number to be formatted
  * @param {string} [countryCode] 2 or 3 letter ISO country code
- * @returns {string} E.164 formated phone number without leading plus sign
+ * @returns {string} E.164 formatted phone number without leading plus sign
  * @see {@link https://en.wikipedia.org/wiki/E.164|e.164}
- * @author lally elias <lallyelias87@mail.com>
+ * @author lally elias <lallyelias87@gmail.com>
+ * @license MIT
  * @since 0.1.0
  * @version 0.1.0
  * @public
+ * @static
+ * @example
+ *
+ * import { toE164 } from '@lykmapipo/phone';
+ *
+ * const phoneNumber = toE164('0715333777');
+ * const phoneNumber = toE164('0715333777', 'TZ');
+ *
+ * //=> result
+ * 255715333777
  */
 export const toE164 = (phoneNumber, countryCode) => {
   // try convert give phone number to e.164

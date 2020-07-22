@@ -1,8 +1,6 @@
 import { expect } from '@lykmapipo/test-helpers';
 import { TYPES, FORMATS, parsePhoneNumber, toE164 } from '../src/index';
 
-// const { TYPES, FORMATS, parsePhoneNumber, toE164 } = phone;
-
 describe('phone', () => {
   it('should exports phone number types', () => {
     expect(TYPES).to.exist;
