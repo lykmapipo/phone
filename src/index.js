@@ -10,7 +10,7 @@ import {
   toUpper,
 } from 'lodash';
 import { uniq } from '@lykmapipo/common';
-import { getStrings, getCountryCode } from '@lykmapipo/env';
+import { getStringSet, getCountryCode } from '@lykmapipo/env';
 import {
   PhoneNumberFormat,
   PhoneNumberType,
@@ -69,8 +69,8 @@ const checkValidity = (phoneNumber) => {
     // obtain available phone number types
     const phoneNumberTypes = merge({}, PhoneNumberType);
 
-    // check phone number type validity
-    forEach(phoneNumberTypes, function checkType(typeIndex, typeName) {
+    // type checker
+    const checkType = (typeIndex, typeName) => {
       // derive type name and check phone number type
       const numberTypeName = camelCase(`is${typeName}`);
       const numberTypeIs = phoneNumberType === typeIndex;
@@ -82,7 +82,10 @@ const checkValidity = (phoneNumber) => {
       if (numberTypeIs) {
         types.type = typeName;
       }
-    });
+    };
+
+    // check phone number type validity
+    forEach(phoneNumberTypes, checkType);
   } catch (error) {
     // handle unknown types
     types = undefined;
@@ -124,15 +127,18 @@ const format = (phoneNumber) => {
     // obtain available phone number formats
     const phoneNumberFormats = merge({}, PhoneNumberFormat);
 
-    // format phone number
-    forEach(phoneNumberFormats, function formatNumber(value, key) {
+    // format number
+    const formatNumber = (value, key) => {
       const numberFormat = toLower(key);
       const formatValue = phoneNumberUtil.format(
         phoneNumber,
         phoneNumberFormats[key]
       );
       formats[numberFormat] = formatValue;
-    });
+    };
+
+    // format phone number
+    forEach(phoneNumberFormats, formatNumber);
   } catch (error) {
     // handle unknown formats
     formats = undefined;
@@ -195,14 +201,17 @@ export const parsePhoneNumber = (phoneNumber, ...countryCode) => {
     const raw = clone(phoneNumber);
 
     // collect country codes
-    let countryCodes = getStrings('DEFAULT_COUNTRY_CODES', getCountryCode());
+    let countryCodes = getStringSet('DEFAULT_COUNTRY_CODES', getCountryCode());
     countryCodes = uniq([...countryCode, ...countryCodes]);
     countryCodes = uniq(map(countryCodes, toUpper));
 
-    // test parsing for provided country codes
-    const phones = map(countryCodes, function _parse(_countryCode) {
+    // parse phone number per country code
+    const parseByCountryCode = (givenCountryCode) => {
       // parse phone number
-      const parsed = phoneNumberUtil.parseAndKeepRawInput(raw, _countryCode);
+      const parsed = phoneNumberUtil.parseAndKeepRawInput(
+        raw,
+        givenCountryCode
+      );
 
       // prepare parse phone number result
       let phone = {};
@@ -212,7 +221,7 @@ export const parsePhoneNumber = (phoneNumber, ...countryCode) => {
 
       // set phone country code
       phone.countryCode =
-        phoneNumberUtil.getRegionCodeForNumber(parsed) || _countryCode;
+        phoneNumberUtil.getRegionCodeForNumber(parsed) || givenCountryCode;
 
       // set phone country calling code
       phone.callingCode =
@@ -246,7 +255,10 @@ export const parsePhoneNumber = (phoneNumber, ...countryCode) => {
 
       // return parsed phone number
       return phone;
-    });
+    };
+
+    // test parsing for provided country codes
+    const phones = map(countryCodes, parseByCountryCode);
 
     // return valid parsed or any
     const phone = find(phones, { isValid: true });
