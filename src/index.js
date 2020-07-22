@@ -1,14 +1,12 @@
-import {
-  clone,
-  camelCase,
-  find,
-  forEach,
-  keys,
-  map,
-  merge,
-  toLower,
-  toUpper,
-} from 'lodash';
+import clone from 'lodash/clone';
+import camelCase from 'lodash/camelCase';
+import find from 'lodash/find';
+import forEach from 'lodash/forEach';
+import keys from 'lodash/keys';
+import map from 'lodash/map';
+import merge from 'lodash/merge';
+import toLower from 'lodash/toLower';
+import toUpper from 'lodash/toUpper';
 import { uniq } from '@lykmapipo/common';
 import { getStringSet, getCountryCode } from '@lykmapipo/env';
 import {

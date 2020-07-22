@@ -4,7 +4,19 @@ import pkg from './package.json';
 export default [
   {
     input: 'src/index.js',
-    external: [...keys(pkg.dependencies), ...keys(pkg.peerDependencies)],
+    external: [
+      'lodash/clone',
+      'lodash/camelCase',
+      'lodash/find',
+      'lodash/forEach',
+      'lodash/keys',
+      'lodash/map',
+      'lodash/merge',
+      'lodash/toLower',
+      'lodash/toUpper',
+      ...keys(pkg.dependencies),
+      ...keys(pkg.peerDependencies),
+    ],
     output: [
       {
         file: pkg.main,
