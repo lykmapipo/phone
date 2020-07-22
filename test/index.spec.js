@@ -214,4 +214,11 @@ describe('phone', () => {
     expect(phoneNumber).to.exist;
     expect(phoneNumber).to.be.eql('254714969698');
   });
+
+  it('should parse phone number', () => {
+    const rawPhoneNumber = null;
+    const countryCode = 'TZ';
+    const phoneNumber = toE164(rawPhoneNumber, countryCode);
+    expect(phoneNumber).to.be.equal(rawPhoneNumber);
+  });
 });

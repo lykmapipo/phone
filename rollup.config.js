@@ -9,6 +9,7 @@ export default [
       'lodash/camelCase',
       'lodash/find',
       'lodash/forEach',
+      'lodash/isEmpty',
       'lodash/keys',
       'lodash/map',
       'lodash/merge',

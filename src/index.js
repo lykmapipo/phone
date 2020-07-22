@@ -1,17 +1,11 @@
 import clone from 'lodash/clone';
 import find from 'lodash/find';
 import map from 'lodash/map';
-import merge from 'lodash/merge';
 import toUpper from 'lodash/toUpper';
 import { uniq } from '@lykmapipo/common';
 import { getStringSet, getCountryCode } from '@lykmapipo/env';
 
-import {
-  phoneNumberUtil,
-  parseRawPhoneNumber,
-  applyFormats,
-  checkTypes,
-} from './utils';
+import { parsePhoneNumber as parsePhoneNumberByCountryCode } from './utils';
 
 export * from './constants';
 
@@ -76,57 +70,10 @@ export const parsePhoneNumber = (phoneNumber, ...countryCode) => {
     countryCodes = uniq([...countryCode, ...countryCodes]);
     countryCodes = uniq(map(countryCodes, toUpper));
 
-    // parse phone number per country code
-    const parseByCountryCode = (givenCountryCode) => {
-      // parse phone number
-      const parsed = parseRawPhoneNumber(raw, givenCountryCode);
-
-      // prepare parse phone number result
-      let phone = {};
-
-      // set raw phone number
-      phone.raw = raw;
-
-      // set phone country code
-      phone.countryCode =
-        phoneNumberUtil.getRegionCodeForNumber(parsed) || givenCountryCode;
-
-      // set phone country calling code
-      phone.callingCode =
-        parsed.getCountryCode() || parsed.getCountryCodeOrDefault();
-
-      // set phone number extension
-      phone.extension = parsed.getExtension() || parsed.getExtensionOrDefault();
-
-      // set phone number valid flag
-      phone.isValid = phoneNumberUtil.isValidNumber(parsed);
-
-      // set possible flag
-      phone.isPossible = phoneNumberUtil.isPossibleNumber(parsed);
-
-      // set is valid for country(or region) code
-      phone.isValidForCountryCode = phoneNumberUtil.isValidNumberForRegion(
-        parsed,
-        phone.countryCode
-      );
-
-      // set phone number type flags
-      phone = merge({}, phone, checkTypes(parsed));
-
-      // format phone number in accepted formats
-      phone = merge({}, phone, applyFormats(parsed));
-
-      // add e164 format with no plus
-      if (phone.e164) {
-        phone.e164NoPlus = phone.e164.replace(/\+/g, '');
-      }
-
-      // return parsed phone number
-      return phone;
-    };
-
     // test parsing for provided country codes
-    const phones = map(countryCodes, parseByCountryCode);
+    const phones = map(countryCodes, (givenCountryCode) =>
+      parsePhoneNumberByCountryCode(raw, givenCountryCode)
+    );
 
     // return valid parsed or any
     const phone = find(phones, { isValid: true });
