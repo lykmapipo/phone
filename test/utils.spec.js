@@ -21,7 +21,7 @@ import {
   phoneNumberUtil,
   parseRawPhoneNumber,
   formatPhoneNumber,
-  format,
+  applyFormats,
   checkTypes,
 } from '../src/utils';
 
@@ -128,10 +128,10 @@ describe('phone utils', () => {
     ).to.be.eql({});
   });
 
-  it('should format raw phone number with all available formats', () => {
-    expect(format).to.exist.and.be.a('function');
+  it('should format phone number with all available formats', () => {
+    expect(applyFormats).to.exist.and.be.a('function');
 
-    expect(format(parseRawPhoneNumber('+255715333777'))).to.be.eql({
+    expect(applyFormats(parseRawPhoneNumber('+255715333777'))).to.be.eql({
       e164: '+255715333777',
       international: '+255 715 333 777',
       national: '0715 333 777',
@@ -139,7 +139,7 @@ describe('phone utils', () => {
     });
   });
 
-  it('should get phone number types', () => {
+  it('should check phone number types validity', () => {
     expect(checkTypes).to.be.a('function');
     expect(checkTypes(parseRawPhoneNumber('+255715333777'))).to.be.eql({
       isFixedLine: false,

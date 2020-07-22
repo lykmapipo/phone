@@ -171,8 +171,8 @@ export const formatPhoneNumber = (phoneNumber, format) => {
 };
 
 /**
- * @name format
- * @function format
+ * @name applyFormats
+ * @function applyFormats
  * @description Format phone number using available phone number formats
  * @param {object} phoneNumber Instance of parsed phone number
  * @returns {object} Formatted phone number(s)
@@ -183,10 +183,10 @@ export const formatPhoneNumber = (phoneNumber, format) => {
  * @private
  * @example
  *
- * import { format } from '@lykmapipo/phone';
+ * import { applyFormats } from '@lykmapipo/phone';
  *
  * const phoneNumber = parseRawPhoneNumber('0715333777', 'TZ');
- * format(phoneNumber);
+ * applyFormats(phoneNumber);
  *
  * //=> result
  * {
@@ -197,7 +197,7 @@ export const formatPhoneNumber = (phoneNumber, format) => {
  * }
  *
  */
-export const format = (phoneNumber) => {
+export const applyFormats = (phoneNumber) => {
   // initialize formats
   let formats = {};
 

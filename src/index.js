@@ -9,7 +9,7 @@ import { getStringSet, getCountryCode } from '@lykmapipo/env';
 import {
   phoneNumberUtil,
   parseRawPhoneNumber,
-  format,
+  applyFormats,
   checkTypes,
 } from './utils';
 
@@ -116,7 +116,7 @@ export const parsePhoneNumber = (phoneNumber, ...countryCode) => {
       phone = merge({}, phone, checkTypes(parsed));
 
       // format phone number in accepted formats
-      phone = merge({}, phone, format(parsed));
+      phone = merge({}, phone, applyFormats(parsed));
 
       // add e164 format with no plus
       if (phone.e164) {
