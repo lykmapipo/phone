@@ -2,7 +2,6 @@ import clone from 'lodash/clone';
 import camelCase from 'lodash/camelCase';
 import find from 'lodash/find';
 import forEach from 'lodash/forEach';
-import keys from 'lodash/keys';
 import map from 'lodash/map';
 import merge from 'lodash/merge';
 import toLower from 'lodash/toLower';
@@ -15,11 +14,9 @@ import {
   PhoneNumberUtil,
 } from 'google-libphonenumber';
 
-const phoneNumberUtil = PhoneNumberUtil.getInstance();
+export * from './utils';
 
-/* constants */
-const PHONE_NUMBER_TYPES = keys(merge({}, PhoneNumberType));
-const PHONE_NUMBER_FORMATS = keys(merge({}, PhoneNumberFormat));
+const phoneNumberUtil = PhoneNumberUtil.getInstance();
 
 /* helpers */
 
@@ -270,48 +267,6 @@ export const parsePhoneNumber = (phoneNumber, ...countryCode) => {
 /* exports */
 
 /**
- * @name TYPES
- * @description phone number types
- * @type {Array}
- * @author lally elias <lallyelias87@gmail.com>
- * @license MIT
- * @since 0.1.0
- * @version 0.1.0
- * @public
- * @example
- *
- * const { TYPES, TYPE_MOBILE } = phone;
- *
- */
-export const TYPES = [].concat(PHONE_NUMBER_TYPES);
-
-// TODO: re-exports on default
-forEach([].concat(PHONE_NUMBER_TYPES), (phoneNumberType) => {
-  parsePhoneNumber[toUpper(`TYPE_${phoneNumberType}`)] = phoneNumberType;
-});
-
-/**
- * @name FORMATS
- * @description phone number formats
- * @type {Array}
- * @author lally elias <lallyelias87@gmail.com>
- * @license MIT
- * @since 0.1.0
- * @version 0.1.0
- * @public
- * @example
- *
- * const { FORMATS, FORMAT_E164 } = phone;
- *
- */
-export const FORMATS = [].concat(PHONE_NUMBER_FORMATS);
-
-// TODO: re-export on default
-forEach([].concat(PHONE_NUMBER_FORMATS), (phoneNumberFormat) => {
-  parsePhoneNumber[toUpper(`FORMAT_${phoneNumberFormat}`)] = phoneNumberFormat;
-});
-
-/**
  * @name toE164
  * @description format provided mobile phone number to E.164 format
  * @param {string} phoneNumber a mobile phone number to be formatted
@@ -336,54 +291,3 @@ export const toE164 = (phoneNumber, countryCode) => {
     return phoneNumber;
   }
 };
-
-/**
- * @name parsePhoneNumber
- * @function parsePhoneNumber
- * @description parse provided phone number to obtain its information
- * @param {string} phoneNumber a valid phone number
- * @param {string} countryCode a valid country code for validation. If not
- * provided process.env.DEFAULT_COUNTRY_CODE or os country code will be used as
- * as default
- * @returns {object} phone number type validity
- * @author lally elias <lallyelias87@gmail.com>
- * @license MIT
- * @since 0.1.0
- * @version 0.1.0
- * @public
- * @example
- *
- * const { parsePhoneNumber } = phone;
- * const info = parsePhoneNumber('+255715333777');
- *
- * // result
- * {
- *  raw: '+255715333777',
- *  countryCode: 'TZ',
- *  callingCode: 255,
- *  extension: '',
- *  isValid: true,
- *  isPossible: true,
- *  isValidForCountryCode: true,
- *  isFixedLine: false,
- *  isMobile: true,
- *  type: 'MOBILE',
- *  isFixedLineOrMobile: false,
- *  isTollFree: false,
- *  isPremiumRate: false,
- *  isSharedCost: false,
- *  isVoip: false,
- *  isPersonalNumber: false,
- *  isPager: false,
- *  isUan: false,
- *  isVoicemail: false,
- *  isUnknown: false,
- *  e164: '+255715333777',
- *  international: '+255 715 333 777',
- *  national: '0715 333 777',
- *  rfc3966: 'tel:+255-715-333-777'
- * }
- *
- */
-// exports = exports.parsePhoneNumber = parsePhoneNumber;
-export default parsePhoneNumber;

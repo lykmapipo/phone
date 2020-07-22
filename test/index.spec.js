@@ -1,6 +1,5 @@
-import _ from 'lodash';
 import { expect } from '@lykmapipo/test-helpers';
-import phone, { TYPES, FORMATS, parsePhoneNumber, toE164 } from '../src/index';
+import { TYPES, FORMATS, parsePhoneNumber, toE164 } from '../src/index';
 
 // const { TYPES, FORMATS, parsePhoneNumber, toE164 } = phone;
 
@@ -9,10 +8,6 @@ describe('phone', () => {
     expect(TYPES).to.exist;
     expect(TYPES).to.be.an('array');
     expect(TYPES).to.have.length.at.least(1);
-    _.forEach([].concat(TYPES), (type) => {
-      expect(phone[`TYPE_${type}`]).to.exist;
-      expect(phone[`TYPE_${type}`]).to.be.a('string');
-    });
   });
 
   it('should exports phone number formats', () => {
@@ -20,10 +15,6 @@ describe('phone', () => {
     expect(FORMATS).to.be.an('array');
     expect(FORMATS).to.have.length.at.least(1);
     expect(FORMATS).to.have.length.at.least(1);
-    _.forEach([].concat(FORMATS), (format) => {
-      expect(phone[`FORMAT_${format}`]).to.exist;
-      expect(phone[`FORMAT_${format}`]).to.be.a('string');
-    });
   });
 
   it('should parse phone number', () => {
