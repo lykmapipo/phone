@@ -15,8 +15,6 @@ import {
 
 export * from './constants';
 
-/* helpers */
-
 /**
  * @name parsePhoneNumber
  * @function parsePhoneNumber
@@ -138,8 +136,6 @@ export const parsePhoneNumber = (phoneNumber, ...countryCode) => {
     return undefined;
   }
 };
-
-/* exports */
 
 /**
  * @name toE164
