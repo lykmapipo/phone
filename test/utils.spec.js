@@ -22,6 +22,7 @@ import {
   parseRawPhoneNumber,
   formatPhoneNumber,
   format,
+  checkValidity,
 } from '../src/utils';
 
 describe('phone utils', () => {
@@ -135,6 +136,25 @@ describe('phone utils', () => {
       international: '+255 715 333 777',
       national: '0715 333 777',
       rfc3966: 'tel:+255-715-333-777',
+    });
+  });
+
+  it('should get phone number types', () => {
+    expect(checkValidity).to.be.a('function');
+    expect(checkValidity(parseRawPhoneNumber('+255715333777'))).to.be.eql({
+      isFixedLine: false,
+      isFixedLineOrMobile: false,
+      isMobile: true,
+      isPager: false,
+      isPersonalNumber: false,
+      isPremiumRate: false,
+      isSharedCost: false,
+      isTollFree: false,
+      isUan: false,
+      isUnknown: false,
+      isVoicemail: false,
+      isVoip: false,
+      type: 'MOBILE',
     });
   });
 });

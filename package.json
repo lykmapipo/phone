@@ -93,7 +93,7 @@
   },
   "peerDependencies": {},
   "dependencies": {
-    "@lykmapipo/common": ">=0.37.4",
+    "@lykmapipo/common": ">=0.38.0",
     "@lykmapipo/env": ">=0.17.14",
     "google-libphonenumber": ">=3.2.10",
     "lodash": ">=4.17.19"

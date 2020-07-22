@@ -1,4 +1,5 @@
 import clone from 'lodash/clone';
+import camelCase from 'lodash/camelCase';
 import forEach from 'lodash/forEach';
 import keys from 'lodash/keys';
 import toLower from 'lodash/toLower';
@@ -7,7 +8,7 @@ import {
   PhoneNumberType,
   PhoneNumberUtil,
 } from 'google-libphonenumber';
-import { mergeObjects, sortedUniq } from '@lykmapipo/common';
+import { mergeObjects, tryCatch, sortedUniq } from '@lykmapipo/common';
 import { getCountryCode } from '@lykmapipo/env';
 
 /**
@@ -211,4 +212,72 @@ export const format = (phoneNumber) => {
 
   // return formatted phone number
   return formats;
+};
+
+/**
+ * @name checkValidity
+ * @function checkValidity
+ * @description Derive phone number type validity
+ * @param {object} phoneNumber Instance of parsed phone number
+ * @returns {object} Validities of a phone number
+ * @author lally elias <lallyelias87@gmail.com>
+ * @license MIT
+ * @since 0.5.0
+ * @version 0.1.0
+ * @private
+ * @example
+ *
+ * import { checkValidity } from '@lykmapipo/phone';
+ *
+ * const phoneNumber = parseRawPhoneNumber('0715333777', 'TZ');
+ * checkValidity(phoneNumber);
+ *
+ * //=> result
+ * {
+ *  isFixedLine: false,
+ *  isMobile: true,
+ *  isFixedLineOrMobile: false,
+ *  isTollFree: false,
+ *  isPremiumRate: false,
+ *  isSharedCost: false,
+ *  isVoip: false,
+ *  isPersonalNumber: false,
+ *  isPager: false,
+ *  isUan: false,
+ *  isVoicemail: false,
+ *  isUnknown: false,
+ *  type: 'MOBILE'
+ * }
+ *
+ */
+export const checkValidity = (phoneNumber) => {
+  // initialize types validity
+  const types = {};
+
+  // obtain parsed phone number type
+  const phoneNumberType = tryCatch(
+    () => phoneNumberUtil.getNumberType(phoneNumber),
+    -1
+  );
+
+  // type checker
+  const checkType = (typeIndex, typeName) => {
+    // derive type name and check phone number type
+    const numberTypeName = camelCase(`is${typeName}`);
+    const numberTypeIs = phoneNumberType === typeIndex;
+
+    // set type is flag
+    types[numberTypeName] = numberTypeIs;
+
+    // set type name string
+    if (numberTypeIs) {
+      types.type = typeName;
+    }
+  };
+
+  // check phone number type validity
+  forEach(PhoneNumberType, checkType);
+
+  // return types validity
+  return types;
 };
