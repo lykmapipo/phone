@@ -1,3 +1,41 @@
+#### 0.7.0 (2020-08-01)
+
+##### Chores
+
+* **deps:**
+  *  force latest version & audit fix ([42966372](https://github.com/lykmapipo/phone/commit/429663724d3c391604d03671f7f21b9945efbec3))
+  *  fix prototype pollution vulnerability in dot-prop ([1b141125](https://github.com/lykmapipo/phone/commit/1b14112588cc9bb6a0817f6f459aac250b8cbca3))
+  *  force latest version & audit fix ([991b8c8a](https://github.com/lykmapipo/phone/commit/991b8c8a34e410ad48354b46ec6c6cc4cbb7c0e4))
+  *  force latest version & audit fix ([35c5f245](https://github.com/lykmapipo/phone/commit/35c5f245c3da035615b66b348549852469a03cd3))
+* **config:**  correct build external ([2be499fe](https://github.com/lykmapipo/phone/commit/2be499fec1fa3727cdde6267a2a09196267d5fae))
+
+##### New Features
+
+* **utils:**
+  *  add type validity check ([104aac83](https://github.com/lykmapipo/phone/commit/104aac8323ecbc5a1012bfa332919cef87019652))
+  *  add phone number formatters ([30648fdc](https://github.com/lykmapipo/phone/commit/30648fdc8b1aea43bc8383d032b856c387ef6eb2))
+  *  add parse raw phone number ([23ca4d9d](https://github.com/lykmapipo/phone/commit/23ca4d9dddf2652954597d7a0abd4149101a030a))
+
+##### Refactors
+
+* **utils:**
+  *  improve parsing by country code ([10c779b0](https://github.com/lykmapipo/phone/commit/10c779b081df2bc9c86cbb40686e97b6828dd2b6))
+  *  rename format to applyFormats ([8e42c1b7](https://github.com/lykmapipo/phone/commit/8e42c1b72573ae26f0340e11e9a85c1cf1292785))
+  *  rename checkValidity to checkTypes ([4d2d1777](https://github.com/lykmapipo/phone/commit/4d2d17775c33d2cdad7198aa819c66253d1e12fa))
+*  slice parsePhoneNumber to utils ([ed184d87](https://github.com/lykmapipo/phone/commit/ed184d87230c5a8f5d432837f27479f764e21aaa))
+*  extract constants from utils ([0a94d27b](https://github.com/lykmapipo/phone/commit/0a94d27bfede15c582325c55fae07bdfe7e25b61))
+*  remove default exports & add utils ([64311a09](https://github.com/lykmapipo/phone/commit/64311a09c444583a5c08a500c2c6b305d57ee329))
+*  use lodash specific imports ([ae0f2e48](https://github.com/lykmapipo/phone/commit/ae0f2e488b5e71d72308e7cde2d49edde7f05b3c))
+*  remove underscore dangles ([e37cb02d](https://github.com/lykmapipo/phone/commit/e37cb02dbed1f0e13de2c5bb43ad3fd85a8c059f))
+*  re-write use es6 ([3115a878](https://github.com/lykmapipo/phone/commit/3115a8787f5f9c9bb04461da293a6117f2d9a656))
+
+##### Code Style Changes
+
+*  improve jsdocs ([ea5ce8de](https://github.com/lykmapipo/phone/commit/ea5ce8de7a0753664ab2896f15db17ab5c27c500))
+*  clear unused demarcations ([d9589a71](https://github.com/lykmapipo/phone/commit/d9589a7184335d5a0f2b51f4bf93a880316575e6))
+*  add TYPES & FORMATS jsdocs ([e9997483](https://github.com/lykmapipo/phone/commit/e9997483a9a6124c358075391eeddbf4583dfd05))
+*  improve jsdocs ([ea6e2097](https://github.com/lykmapipo/phone/commit/ea6e20973cfdc8ee00a6be29deb9162b01159f4d))
+
 #### 0.6.11 (2020-07-20)
 
 ##### Chores
