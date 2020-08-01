@@ -6,7 +6,7 @@ import {
   formatPhoneNumber,
   applyFormats,
   checkTypes,
-  parsePhoneNumber,
+  parsePhoneNumberByCountryCode,
 } from '../src/utils';
 
 describe('phone utils', () => {
@@ -98,7 +98,10 @@ describe('phone utils', () => {
   it('should parse phone number', () => {
     const rawPhoneNumber = '+255715333777';
     const countryCode = 'TZ';
-    const phoneNumber = parsePhoneNumber(rawPhoneNumber, countryCode);
+    const phoneNumber = parsePhoneNumberByCountryCode(
+      rawPhoneNumber,
+      countryCode
+    );
     expect(phoneNumber).to.exist;
     expect(phoneNumber.raw).to.exist;
     expect(phoneNumber.countryCode).to.exist;
@@ -129,7 +132,10 @@ describe('phone utils', () => {
   it('should parse phone number', () => {
     const rawPhoneNumber = null;
     const countryCode = 'TZ';
-    const phoneNumber = parsePhoneNumber(rawPhoneNumber, countryCode);
+    const phoneNumber = parsePhoneNumberByCountryCode(
+      rawPhoneNumber,
+      countryCode
+    );
     expect(phoneNumber).to.be.undefined;
   });
 });

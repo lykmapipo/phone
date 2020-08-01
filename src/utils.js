@@ -1,7 +1,6 @@
 import clone from 'lodash/clone';
 import camelCase from 'lodash/camelCase';
 import forEach from 'lodash/forEach';
-import isEmpty from 'lodash/isEmpty';
 import merge from 'lodash/merge';
 import toLower from 'lodash/toLower';
 import {
@@ -226,8 +225,8 @@ export const checkTypes = (phoneNumber) => {
 };
 
 /**
- * @name parsePhoneNumber
- * @function parsePhoneNumber
+ * @name parsePhoneNumberByCountryCode
+ * @function parsePhoneNumberByCountryCode
  * @description Parse provided phone number to obtain its information
  * @param {string} phoneNumber Valid phone number
  * @param {...string} [countryCode] Valid country code(s) for validation. If
@@ -242,10 +241,8 @@ export const checkTypes = (phoneNumber) => {
  * @static
  * @example
  *
- * import { parsePhoneNumber } from '@lykmapipo/phone';
- *
- * const phoneNumber = parsePhoneNumber('+255715333777');
- * const phoneNumber = parsePhoneNumber('+255715333777', 'TZ');
+ * const phoneNumber = parsePhoneNumberByCountryCode('+255715333777');
+ * const phoneNumber = parsePhoneNumberByCountryCode('+255715333777', 'TZ');
  *
  * //=> result
  * {
@@ -276,54 +273,52 @@ export const checkTypes = (phoneNumber) => {
  * }
  *
  */
-export const parsePhoneNumber = (phoneNumber, countryCode) => {
+export const parsePhoneNumberByCountryCode = (phoneNumber, countryCode) => {
   // parse phone number
-  const parsed = parseRawPhoneNumber(phoneNumber, countryCode);
+  try {
+    const parsed = parseRawPhoneNumber(phoneNumber, countryCode);
 
-  if (isEmpty(parsed)) {
+    // prepare parse phone number result
+    let phone = {};
+
+    // set raw phone number
+    phone.raw = phoneNumber;
+
+    // set phone country code
+    phone.countryCode =
+      phoneNumberUtil.getRegionCodeForNumber(parsed) || countryCode;
+
+    // set phone country calling code
+    phone.callingCode = parsed.getCountryCodeOrDefault();
+
+    // set phone number extension
+    phone.extension = parsed.getExtensionOrDefault();
+
+    // set phone number valid flag
+    phone.isValid = phoneNumberUtil.isValidNumber(parsed);
+
+    // set possible flag
+    phone.isPossible = phoneNumberUtil.isPossibleNumber(parsed);
+
+    // set is valid for country(or region) code
+    phone.isValidForCountryCode = phoneNumberUtil.isValidNumberForRegion(
+      parsed,
+      phone.countryCode
+    );
+
+    // set phone number type flags
+    phone = merge({}, phone, checkTypes(parsed));
+
+    // format phone number in accepted formats
+    phone = merge({}, phone, applyFormats(parsed));
+
+    // add e164 format with no plus
+    phone.e164NoPlus = phone.e164.replace(/\+/g, '');
+
+    // return parsed phone number
+    return phone;
+  } catch (e) {
+    // fail to parse phone number
     return undefined;
   }
-
-  // prepare parse phone number result
-  let phone = {};
-
-  // set raw phone number
-  phone.raw = phoneNumber;
-
-  // set phone country code
-  phone.countryCode =
-    phoneNumberUtil.getRegionCodeForNumber(parsed) || countryCode;
-
-  // set phone country calling code
-  phone.callingCode =
-    parsed.getCountryCode() || parsed.getCountryCodeOrDefault();
-
-  // set phone number extension
-  phone.extension = parsed.getExtension() || parsed.getExtensionOrDefault();
-
-  // set phone number valid flag
-  phone.isValid = phoneNumberUtil.isValidNumber(parsed);
-
-  // set possible flag
-  phone.isPossible = phoneNumberUtil.isPossibleNumber(parsed);
-
-  // set is valid for country(or region) code
-  phone.isValidForCountryCode = phoneNumberUtil.isValidNumberForRegion(
-    parsed,
-    phone.countryCode
-  );
-
-  // set phone number type flags
-  phone = merge({}, phone, checkTypes(parsed));
-
-  // format phone number in accepted formats
-  phone = merge({}, phone, applyFormats(parsed));
-
-  // add e164 format with no plus
-  if (phone.e164) {
-    phone.e164NoPlus = phone.e164.replace(/\+/g, '');
-  }
-
-  // return parsed phone number
-  return phone;
 };

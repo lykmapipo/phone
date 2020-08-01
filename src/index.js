@@ -5,7 +5,7 @@ import toUpper from 'lodash/toUpper';
 import { uniq } from '@lykmapipo/common';
 import { getStringSet, getCountryCode } from '@lykmapipo/env';
 
-import { parsePhoneNumber as parsePhoneNumberByCountryCode } from './utils';
+import { parsePhoneNumberByCountryCode } from './utils';
 
 export * from './constants';
 
