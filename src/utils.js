@@ -25,8 +25,6 @@ import { FORMATS } from './constants';
  * @private
  * @example
  *
- * import { phoneNumberUtil } from '@lykmapipo/phone';
- *
  * phoneNumberUtil.parseAndKeepRawInput('0715333777', 'TZ');
  *
  */
@@ -46,8 +44,6 @@ export const phoneNumberUtil = PhoneNumberUtil.getInstance();
  * @version 0.1.0
  * @private
  * @example
- *
- * import { parseRawPhoneNumber } from '@lykmapipo/phone';
  *
  * parseRawPhoneNumber('+255715333777');
  * parseRawPhoneNumber('0715333777', 'TZ');
@@ -86,8 +82,6 @@ export const parseRawPhoneNumber = (
  * @private
  * @example
  *
- * import { formatPhoneNumber, FORMAT_E164 } from '@lykmapipo/phone';
- *
  * const phoneNumber = parseRawPhoneNumber('0715333777', 'TZ');
  * formatPhoneNumber(phoneNumber, FORMAT_E164);
  *
@@ -124,8 +118,6 @@ export const formatPhoneNumber = (phoneNumber, format) => {
  * @version 0.2.0
  * @private
  * @example
- *
- * import { applyFormats } from '@lykmapipo/phone';
  *
  * const phoneNumber = parseRawPhoneNumber('0715333777', 'TZ');
  * applyFormats(phoneNumber);
@@ -168,8 +160,6 @@ export const applyFormats = (phoneNumber) => {
  * @version 0.1.0
  * @private
  * @example
- *
- * import { checkTypes } from '@lykmapipo/phone';
  *
  * const phoneNumber = parseRawPhoneNumber('0715333777', 'TZ');
  * checkTypes(phoneNumber);
