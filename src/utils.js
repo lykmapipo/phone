@@ -26,7 +26,6 @@ import { FORMATS } from './constants';
  * @example
  *
  * phoneNumberUtil.parseAndKeepRawInput('0715333777', 'TZ');
- *
  */
 export const phoneNumberUtil = PhoneNumberUtil.getInstance();
 
@@ -47,7 +46,6 @@ export const phoneNumberUtil = PhoneNumberUtil.getInstance();
  *
  * parseRawPhoneNumber('+255715333777');
  * parseRawPhoneNumber('0715333777', 'TZ');
- *
  */
 export const parseRawPhoneNumber = (
   phoneNumber,
@@ -89,7 +87,6 @@ export const parseRawPhoneNumber = (
  * {
  *   e164: '+255715333777'
  * }
- *
  */
 export const formatPhoneNumber = (phoneNumber, format) => {
   try {
@@ -129,7 +126,6 @@ export const formatPhoneNumber = (phoneNumber, format) => {
  *  national: '0715 333 777',
  *  rfc3966: 'tel:+255-715-333-777'
  * }
- *
  */
 export const applyFormats = (phoneNumber) => {
   // initialize formats
@@ -180,7 +176,6 @@ export const applyFormats = (phoneNumber) => {
  *  isUnknown: false,
  *  type: 'MOBILE'
  * }
- *
  */
 export const checkTypes = (phoneNumber) => {
   // initialize types validity
@@ -261,7 +256,6 @@ export const checkTypes = (phoneNumber) => {
  *  national: '0715 333 777',
  *  rfc3966: 'tel:+255-715-333-777'
  * }
- *
  */
 export const parsePhoneNumberByCountryCode = (phoneNumber, countryCode) => {
   // parse phone number

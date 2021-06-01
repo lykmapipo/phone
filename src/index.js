@@ -58,7 +58,6 @@ export * from './constants';
  *  national: '0715 333 777',
  *  rfc3966: 'tel:+255-715-333-777'
  * }
- *
  */
 export const parsePhoneNumber = (phoneNumber, ...countryCode) => {
   try {
