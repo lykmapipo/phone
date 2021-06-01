@@ -1,16 +1,40 @@
+# Logs
 logs
 *.log
+
+# Runtime data
 pids
 *.pid
 *.seed
+*.pid.lock
 .tmp
+
+# Intermediate data
 .grunt
-node_modules
-libcov
-coverage
+.husky
 .nyc_output
-test
-examples
+coverage
+libcov
+lib-cov
+*.lcov
+
+# Dependency directories
+node_modules/
+
+# Package files
 docs
+examples
+test
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+
+# Configuration files
+.babelrc
+.editorconfig
+.eslintignore
+.eslintrc
+.prettierignore
+.prettierrc
 .travis.yml
 Gruntfile.js
+rollup.config.js

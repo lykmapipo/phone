@@ -1,11 +1,12 @@
 {
   "name": "@lykmapipo/phone",
-  "version": "0.7.11",
+  "version": "0.7.13",
   "description": "Helper utilities for parsing and validate phone numbers",
   "main": "lib/index.js",
   "module": "es/index.js",
   "scripts": {
     "clean": "rimraf lib dist es umd logs",
+    "prepare": "husky install",
     "prebuild": "npm test && npm run clean",
     "build": "rollup -c",
     "lint": "eslint --fix --ext .js src/ test/ rollup.config.js",
@@ -56,54 +57,54 @@
   },
   "homepage": "https://github.com/lykmapipo/phone#readme",
   "devDependencies": {
-    "@babel/cli": "^7.12.10",
-    "@babel/core": "^7.12.10",
-    "@babel/node": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "@babel/register": "^7.12.10",
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
-    "@commitlint/travis-cli": "^11.0.0",
-    "@lykmapipo/test-helpers": "^0.6.8",
-    "chai": "^4.2.0",
-    "commitizen": "^4.2.2",
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/node": "^7.14.2",
+    "@babel/preset-env": "^7.14.4",
+    "@babel/register": "^7.13.16",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "@commitlint/travis-cli": "^12.1.4",
+    "@lykmapipo/test-helpers": "^0.6.17",
+    "chai": "^4.3.4",
+    "commitizen": "^4.2.4",
     "coveralls": "^3.1.0",
     "cz-conventional-changelog": "^3.3.0",
     "dot-prop": "^6.0.1",
     "doxdox": "^3.0.0",
-    "eslint": "^7.17.0",
+    "eslint": "^7.27.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-prettier": "^7.1.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsdoc": "^30.7.13",
-    "eslint-plugin-mocha": "^8.0.0",
-    "eslint-plugin-prettier": "^3.3.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsdoc": "^35.1.2",
+    "eslint-plugin-mocha": "^9.0.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "generate-changelog": "^1.8.0",
-    "handlebars": "^4.7.6",
-    "husky": "^4.3.6",
-    "lint-staged": "^10.5.3",
+    "handlebars": "^4.7.7",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
     "lodash.template": "^4.5.0",
     "minimist": "^1.2.5",
-    "mocha": "^8.2.1",
-    "nock": "^13.0.5",
-    "npm-check-updates": "^10.2.5",
+    "mocha": "^8.4.0",
+    "nock": "^13.1.0",
+    "npm-check-updates": "^11.6.0",
     "nyc": "^15.1.0",
-    "prettier": "^2.2.1",
+    "prettier": "^2.3.0",
     "rimraf": "^3.0.2",
-    "rollup": "^2.35.1",
+    "rollup": "^2.50.5",
     "shelljs": "^0.8.4",
     "websocket-extensions": "^0.1.4"
   },
   "peerDependencies": {},
   "dependencies": {
-    "@lykmapipo/common": ">=0.42.6",
-    "@lykmapipo/env": ">=0.17.26",
-    "google-libphonenumber": ">=3.2.15",
-    "lodash": ">=4.17.20"
+    "@lykmapipo/common": ">=0.43.2",
+    "@lykmapipo/env": ">=0.17.33",
+    "google-libphonenumber": ">=3.2.21",
+    "lodash": ">=4.17.21"
   },
   "engines": {
-    "node": ">=12.4.0",
-    "npm": ">=6.9.0"
+    "node": ">=14.5.0",
+    "npm": ">=6.14.5"
   },
   "config": {
     "commitizen": {
@@ -116,9 +117,11 @@
     ]
   },
   "lint-staged": {
-    "src/**/*.js": [
-      "npm run lint",
-      "git add -A"
+    "*.js": [
+      "eslint --fix"
+    ],
+    "*.{md,json,yml,html}": [
+      "prettier --write"
     ]
   },
   "husky": {

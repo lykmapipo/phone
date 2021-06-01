@@ -1,6 +1,11 @@
 language: node_js
+# services:
+#  - mongodb
+#  - redis-server
 node_js:
   - node
+# before_script:
+#  - redis-cli config set notify-keyspace-events Ex
 script:
   - commitlint-travis
   - npm test
