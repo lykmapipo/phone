@@ -84,7 +84,6 @@ const FORMAT_RFC3966 = 'RFC3966';
  * @example
  *
  * phoneNumberUtil.parseAndKeepRawInput('0715333777', 'TZ');
- *
  */
 const phoneNumberUtil = PhoneNumberUtil.getInstance();
 
@@ -105,7 +104,6 @@ const phoneNumberUtil = PhoneNumberUtil.getInstance();
  *
  * parseRawPhoneNumber('+255715333777');
  * parseRawPhoneNumber('0715333777', 'TZ');
- *
  */
 const parseRawPhoneNumber = (
   phoneNumber,
@@ -147,7 +145,6 @@ const parseRawPhoneNumber = (
  * {
  *   e164: '+255715333777'
  * }
- *
  */
 const formatPhoneNumber = (phoneNumber, format) => {
   try {
@@ -187,7 +184,6 @@ const formatPhoneNumber = (phoneNumber, format) => {
  *  national: '0715 333 777',
  *  rfc3966: 'tel:+255-715-333-777'
  * }
- *
  */
 const applyFormats = (phoneNumber) => {
   // initialize formats
@@ -238,7 +234,6 @@ const applyFormats = (phoneNumber) => {
  *  isUnknown: false,
  *  type: 'MOBILE'
  * }
- *
  */
 const checkTypes = (phoneNumber) => {
   // initialize types validity
@@ -319,7 +314,6 @@ const checkTypes = (phoneNumber) => {
  *  national: '0715 333 777',
  *  rfc3966: 'tel:+255-715-333-777'
  * }
- *
  */
 const parsePhoneNumberByCountryCode = (phoneNumber, countryCode) => {
   // parse phone number
@@ -420,7 +414,6 @@ const parsePhoneNumberByCountryCode = (phoneNumber, countryCode) => {
  *  national: '0715 333 777',
  *  rfc3966: 'tel:+255-715-333-777'
  * }
- *
  */
 const parsePhoneNumber = (phoneNumber, ...countryCode) => {
   try {
