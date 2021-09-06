@@ -1,3 +1,9 @@
+#### 0.7.16 (2021-09-06)
+
+##### Documentation Changes
+
+* **readme:**  update build status to travis.com ([ccc43a97](https://github.com/lykmapipo/phone/commit/ccc43a977bbbbf446a81d24c27c37c213e810e39))
+
 #### 0.7.15 (2021-08-09)
 
 ##### Chores
