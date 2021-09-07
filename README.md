@@ -1,6 +1,6 @@
 # phone
 
-[![Build Status](https://travis-ci.com/lykmapipo/phone.svg?branch=master)](https://travis-ci.com/lykmapipo/phone)
+[![Build Status](https://app.travis-ci.com/lykmapipo/phone.svg?branch=master)](https://app.travis-ci.com/lykmapipo/phone)
 [![Dependencies Status](https://david-dm.org/lykmapipo/phone.svg)](https://david-dm.org/lykmapipo/phone)
 [![Coverage Status](https://coveralls.io/repos/github/lykmapipo/phone/badge.svg?branch=master)](https://coveralls.io/github/lykmapipo/phone?branch=master)
 [![GitHub License](https://img.shields.io/github/license/lykmapipo/phone)](https://github.com/lykmapipo/phone/blob/master/LICENSE) 
